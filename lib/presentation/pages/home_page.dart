@@ -9,64 +9,65 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Rede de Confeitarias', 
           style: TextStyle(
-            fontSize: 16, 
+            fontSize: 14, 
             fontWeight: FontWeight.bold,
           ),
           ),
       ),
       drawer: Drawer(),
 
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Center(
-                  child: Text('Bem-vindo(a) a sua rede de Confeitarias!', 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.secondary, 
-                      fontSize: 28, 
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                )
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Center(
-                  child: Text('Tenha o controle da sua rede de lojas na palma da sua mão. Cadastre sua confeitaria e produtos de onde estiver!', 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.secondary, 
-                      fontSize: 16, 
-                    ),
-                  )
-                )
-              ),
-              Image.asset('lib/assets/images/confeitaria.png', width: 250,),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Começar'),
-                   style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.quarternary, // Cor de fundo do botão
-                      foregroundColor: Colors.white, // Cor do texto quando o botão está pressionado
-                      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0), // Padding interno
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0), // Bordas arredondadas
+      body: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.all(16),
+          children: [
+                Container(
+                  child: Center(
+                    child: Text('Bem-vindo(a) a sua rede de Confeitarias!', 
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.secondary, 
+                        fontSize: 28, 
+                        fontWeight: FontWeight.bold,
                       ),
-                      elevation: 5, // Sombra do botão
-                      minimumSize: Size(200, 40)
+                    )
+                  )
                 ),
+                SizedBox(height: 20,),
+                Container(
+                  child: Center(
+                    child: Text('Tenha o controle da sua rede de lojas na palma da sua mão. Cadastre sua confeitaria e produtos de onde estiver!', 
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.secondary, 
+                        fontSize: 16, 
+                      ),
+                    )
+                  )
                 ),
-              )
-            ],
-          )
-          // Image(image: FileImage(file),)
-        ],
+                Container(
+                  width: 200,
+                  height: 400,
+                  child: Image.asset('lib/assets/images/confeitaria.png', width: 200,)),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Começar'),
+                     style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.quarternary, // Cor de fundo do botão
+                        foregroundColor: Colors.white, // Cor do texto quando o botão está pressionado
+                        padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0), // Padding interno
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0), // Bordas arredondadas
+                        ),
+                        elevation: 5, // Sombra do botão
+                        minimumSize: Size(200, 40)
+                  ),
+                  ),
+                )
+            // Image(image: FileImage(file),)
+          ],
+        ),
       ),
     );
   }

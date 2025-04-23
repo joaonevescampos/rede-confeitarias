@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rede_confeitarias/presentation/pages/store_register.dart';
 import 'core/theme/app_theme.dart';
-import 'presentation/pages/home_page.dart'; // exemplo
+// import 'presentation/pages/home_page.dart'; // exemplo
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: ' Redes de Confeitarias',
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const StoreRegister(),
     );
   }
 }
