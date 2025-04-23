@@ -51,7 +51,9 @@ class HomePage extends StatelessWidget {
                   child: Image.asset('lib/assets/images/confeitaria.png', width: 200,)),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/store-register');
+                    },
                     child: Text('Começar'),
                      style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.quarternary, // Cor de fundo do botão

@@ -3,7 +3,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
 import 'package:rede_confeitarias/presentation/components/map.dart';
-import 'package:rede_confeitarias/presentation/pages/store_page.dart';
 import 'package:rede_confeitarias/services/cep_service.dart';
 
 class StoreRegister extends StatefulWidget {
@@ -86,11 +85,6 @@ class _StoreRegisterState extends State<StoreRegister> {
                       child: ElevatedButton(
                         onPressed: () async {
                           final cep = cepController.text;
-                          final city = cityController.text;
-                          final state = stateController.text;
-                          final adress = adressController.text;
-                          final neighborhood = neighborhoodController.text;
-
                           final data = await fetchAddressFromCep(cep);
 
                           if (data != null) {
@@ -171,19 +165,14 @@ class _StoreRegisterState extends State<StoreRegister> {
             const SizedBox(height: 20),
             Column(
               children: [
-                Text('Seu estabelecimento se encontra aqui:'),
+                Text('Seu estabelecimento se encontra aqui:', 
+                style: TextStyle(color:AppColors.secondary, fontWeight: FontWeight.bold),),
+                SizedBox(height: 10,),
                 SizedBox(
                   height: 300,
                   child: buildMap(
                     coordenates!,
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const StorePage(),
-                        ),
-                      );
-                    },
+                    () {},
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -210,12 +199,26 @@ class _StoreRegisterState extends State<StoreRegister> {
 
                       // Exemplo de feedback visual
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Cadastro realizado com sucesso!', style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
+                        const SnackBar(content: Text('Cadastro realizado com sucesso!', 
+                        style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                       );
+
+                      Navigator.pushNamed(context, 'store-detail');
+
+                      // Quando tver um backend
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => StoreDetail(id_store: '1'),
+                      //   ),
+                      // );
                     } else {
                       // Caso algum campo obrigatório esteja vazio
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Por favor, preencha todos os campos obrigatórios.', style: TextStyle(color: Colors.white),), backgroundColor: Colors.red),
+                        const SnackBar(
+                          content: Text('Por favor, preencha todos os campos obrigatórios.', 
+                          style: TextStyle(color: Colors.white),), 
+                          backgroundColor: Colors.red),
                       );
                     }
                   },

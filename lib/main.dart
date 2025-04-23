@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rede_confeitarias/presentation/pages/store_register.dart';
+import 'package:rede_confeitarias/presentation/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
-// import 'presentation/pages/home_page.dart'; // exemplo
 
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   
@@ -15,8 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: ' Redes de Confeitarias',
       theme: AppTheme.lightTheme,
+      onGenerateRoute: AppRouter.generateRoute,
+      initialRoute: '/',
       debugShowCheckedModeBanner: false,
-      home: const StoreRegister(),
     );
   }
 }
