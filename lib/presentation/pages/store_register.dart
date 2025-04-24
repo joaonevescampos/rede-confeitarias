@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
+import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
 import 'package:rede_confeitarias/presentation/components/map.dart';
 import 'package:rede_confeitarias/services/cep_service.dart';
@@ -27,7 +28,7 @@ class _StoreRegisterState extends State<StoreRegister> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: Drawer(),
+      drawer: CustomDrawer(),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -108,12 +109,12 @@ class _StoreRegisterState extends State<StoreRegister> {
                               });
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Coordenadas não encontradas')),
+                                const SnackBar(content: Text('Coordenadas não encontradas', style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,),
                               );
                             }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('CEP não encontrado')),
+                              const SnackBar(content: Text('CEP não encontrado', style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,),
                             );
                           }
                         },
@@ -122,7 +123,13 @@ class _StoreRegisterState extends State<StoreRegister> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+          if (coordenates != null) ...[
+            const SizedBox(height: 20),
+            Column(
+              children: [
                  Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -158,13 +165,7 @@ class _StoreRegisterState extends State<StoreRegister> {
                   keyboardType: TextInputType.text,
                   controller: neighborhoodController,
                 ),
-              ],
-            ),
-          ),
-          if (coordenates != null) ...[
-            const SizedBox(height: 20),
-            Column(
-              children: [
+                const SizedBox(height: 20),               
                 Text('Seu estabelecimento se encontra aqui:', 
                 style: TextStyle(color:AppColors.secondary, fontWeight: FontWeight.bold),),
                 SizedBox(height: 10,),
@@ -203,7 +204,7 @@ class _StoreRegisterState extends State<StoreRegister> {
                         style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                       );
 
-                      Navigator.pushNamed(context, 'store-detail');
+                      Navigator.pushNamed(context, '/store-details');
 
                       // Quando tver um backend
                       // Navigator.push(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
-import 'package:rede_confeitarias/presentation/components/map.dart';
+import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 
 class StoreDetail extends StatefulWidget {
   const StoreDetail({super.key});
@@ -24,7 +24,7 @@ class _StoreDetailState extends State<StoreDetail> {
           ),
           ),
       ),
-      drawer: Drawer(),
+      drawer: CustomDrawer(),
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
@@ -56,15 +56,7 @@ class _StoreDetailState extends State<StoreDetail> {
             const SizedBox(height: 20),
             Column(
               children: [
-                SizedBox(
-                  height: 500,
-                  child: buildMap(
-                    coordenates[0]!,
-                    () {
-                      Navigator.pushNamed(context, '/store-detail');
-                    },
-                  ),
-                ),
+               
               ],
             ),
           ], 

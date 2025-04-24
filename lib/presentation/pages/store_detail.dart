@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
 import 'package:rede_confeitarias/presentation/components/add_button.dart';
-import 'package:rede_confeitarias/presentation/components/map.dart';
+import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/pages/product_register.dart';
 
 class StoreDetail extends StatefulWidget {
@@ -27,7 +27,7 @@ class _StoreDetailState extends State<StoreDetail> {
           ),
           ),
       ),
-      drawer: Drawer(),
+      drawer: CustomDrawer(),
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
