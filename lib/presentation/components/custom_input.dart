@@ -6,6 +6,7 @@ class CustomInput extends StatelessWidget {
   final TextInputType keyboardType;
   final double? width;
   final int? maxLines;
+  final int? maxLength;
   final TextEditingController controller;
   final String? Function(String?)? validator;
 
@@ -15,6 +16,7 @@ class CustomInput extends StatelessWidget {
     required this.keyboardType,
     this.width,
     this.maxLines,
+    this.maxLength,
     required this.controller,
     this.validator,
   });
@@ -26,6 +28,7 @@ class CustomInput extends StatelessWidget {
        // ocupa toda a largura se não passar width
       child: TextFormField(
         maxLines: maxLines ?? 1,
+        maxLength: maxLength ?? 50,
         controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(

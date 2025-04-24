@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
-import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,7 +14,6 @@ class HomePage extends StatelessWidget {
           ),
           ),
       ),
-      drawer: CustomDrawer(),
 
       body: Center(
         child: ListView(
@@ -68,7 +66,6 @@ class HomePage extends StatelessWidget {
                   ),
                   ),
                 )
-            // Image(image: FileImage(file),)
           ],
         ),
       ),

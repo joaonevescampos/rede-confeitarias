@@ -59,12 +59,14 @@ class _StoreRegisterState extends State<StoreRegister> {
               children: [
                 CustomInput(
                   label: 'Nome da loja',
+                  maxLength: 30,
                   keyboardType: TextInputType.text,
                   controller: nameController,
                 ),
                 const SizedBox(height: 20),
                 CustomInput(
                   label: 'Telefone',
+                  maxLength: 13,
                   keyboardType: TextInputType.number,
                   controller: phoneController,
                 ),
@@ -76,6 +78,7 @@ class _StoreRegisterState extends State<StoreRegister> {
                       flex: 2,
                       child: CustomInput(
                         label: 'CEP',
+                        maxLength: 8,
                         keyboardType: TextInputType.number,
                         controller: cepController,
                       ),
@@ -146,6 +149,7 @@ class _StoreRegisterState extends State<StoreRegister> {
                       flex: 1,
                       child: CustomInput(
                         label: 'Estado',
+                        maxLength: 2,
                         keyboardType: TextInputType.text,
                         controller: stateController,
                       ),
