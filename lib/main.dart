@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: ' Redes de Confeitarias',
       theme: AppTheme.lightTheme,
       onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: '/store-details',
+      initialRoute: '/stores-map',
       debugShowCheckedModeBanner: false,
     );
   }

@@ -75,7 +75,7 @@ class ProductInfo extends StatelessWidget {
                     icon: Icon(Icons.edit, color: AppColors.terciary, size: 20, ),
                     onPressed: () {
                       // ação de editar
-                      Navigator.pushNamed(context, 'update-product');
+                      Navigator.pushNamed(context, '/update-product');
                     },
                   ),
                   IconButton(

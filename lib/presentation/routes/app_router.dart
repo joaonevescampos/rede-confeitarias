@@ -3,6 +3,9 @@ import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
 import 'package:rede_confeitarias/presentation/pages/home_page.dart';
 import 'package:rede_confeitarias/presentation/pages/store_detail.dart';
 import 'package:rede_confeitarias/presentation/pages/store_register.dart';
+import 'package:rede_confeitarias/presentation/pages/stores_map.dart';
+import 'package:rede_confeitarias/presentation/pages/update_product.dart';
+import 'package:rede_confeitarias/presentation/pages/update_store.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -13,11 +16,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const StoreRegister());
       case '/store-details':
         // final args = settings.arguments;
-        return MaterialPageRoute(builder: (_) => StoreDetail()); // se precisar passar argumentos
-      // case '/update-store':
-      //   return MaterialPageRoute(builder: (_) => const UpdateStore());
-      // case '/update-product':
-      //   return MaterialPageRoute(builder: (_) => const UpdateProduct());
+        return MaterialPageRoute(builder: (_) => StoreDetail()); 
+      case '/stores-map':
+        return MaterialPageRoute(builder: (_) => StoresMap());
+      case '/update-store':
+        return MaterialPageRoute(builder: (_) => const UpdateStore());
+      case '/update-product':
+        return MaterialPageRoute(builder: (_) => const UpdateProduct());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

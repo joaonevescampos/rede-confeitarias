@@ -43,7 +43,7 @@ class CustomDrawer extends StatelessWidget {
             leading: Icon(Icons.store, color: Colors.white,),
             title: Text('Minhas lojas', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/stores-details');
+              Navigator.pushReplacementNamed(context, '/stores-map');
             },
           ),
         ],
