@@ -15,13 +15,13 @@ class StoreDetail extends StatefulWidget {
 class _StoreDetailState extends State<StoreDetail> {
   //este dado tem que vir do backend (por meio do id, pego as coordenadas de cada loja)
   final coordenates = [LatLng(-7.04105, -34.841602)];
-  String storeName = 'Confeitaria do João';
+  String storeName = 'Confeitaria do João em Inter - Cabedelo';
   final products = [
   {
     'id': '1',
-    'productName': 'Produto 1 kkd idkj dcfkjdck dckdjckdc',
+    'productName': 'Produto com um nome muito longo para minha loja',
     'price': 12.90,
-    'description': 'Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla',
+    'description': 'Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla',
     'imageUrl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNulBAmbFLYlWLOcQ9d32jzj2XLyMgOkmPeg&s', // exemplo de URL de imagem
   },
   {
@@ -55,17 +55,31 @@ class _StoreDetailState extends State<StoreDetail> {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          Container(
-            child: Center(
-              child: Text('$storeName', 
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.secondary, 
-                  fontSize: 28, 
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            )
+          Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 280,
+                child: Center(
+                  child: Text('$storeName', 
+                    style: TextStyle(
+                      color: AppColors.secondary, 
+                      fontSize: 20, 
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  )
+                )
+              ),
+              IconButton(onPressed: (){
+                Navigator.pushNamed(context, '/update-store');
+              }, 
+              icon: Icon(Icons.settings, 
+              color: AppColors.secondary, 
+              size: 20,))
+            ],
           ),
           SizedBox(height: 20,),
           if(products.isEmpty)
@@ -94,6 +108,8 @@ class _StoreDetailState extends State<StoreDetail> {
                 ],
               );
             }).toList(),
+          const SizedBox(height: 60,),
+
         ],
       ),
       floatingActionButton: AddButton(

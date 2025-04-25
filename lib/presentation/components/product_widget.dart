@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
-
 class ProductInfo extends StatelessWidget {
   final String productName;
   final double price;
   final String description;
   final String imageUrl;
-
 
   const ProductInfo({
     super.key,
@@ -22,20 +20,21 @@ class ProductInfo extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white, // cor de fundo
+        color: Colors.white, 
         border: Border.all(
-          color: AppColors.terciary, // cor da borda
-          width: 1,           // espessura da borda
+          color: AppColors.terciary, 
+          width: 1,          
         ),
-        borderRadius: BorderRadius.circular(12), // bordas arredondadas
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(6), // border radius
+                borderRadius: BorderRadius.circular(6),
                 child: Image.network(
                   '$imageUrl',
                   width: 100, // largura
@@ -44,41 +43,43 @@ class ProductInfo extends StatelessWidget {
                 ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    // width: double.infinity,
+                    width: 150,
                     child: Text('$productName',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: AppColors.secondary,
                         fontWeight: FontWeight.bold,
                       ),
-                      // softWrap: true,
-                      // overflow: TextOverflow.visible,
-                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                    ),
                   ),
                   const SizedBox(height: 10,),
-                  Text('$price', 
+                  Text('R\$ $price', 
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 16,
                       color: AppColors.secondary,
                     ),
-                    // softWrap: true,
-                    // overflow: TextOverflow.visible,
                   ),
                 ],
               ),
               Column(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.edit, color: AppColors.terciary),
+                    icon: Icon(Icons.edit, color: AppColors.terciary, size: 20, ),
                     onPressed: () {
                       // ação de editar
+                      Navigator.pushNamed(context, 'update-product');
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: AppColors.terciary),
+                    icon: Icon(Icons.delete, color: AppColors.terciary, size: 20,),
                     onPressed: () {
                       // ação de deletar
                     },
@@ -93,8 +94,9 @@ class ProductInfo extends StatelessWidget {
               fontSize: 16,
               color: AppColors.secondary,
             ),
-            // maxLines: 4,
-            // overflow: TextOverflow.ellipsis,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
           )
         ],
       ),

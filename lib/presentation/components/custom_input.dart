@@ -28,7 +28,7 @@ class CustomInput extends StatelessWidget {
        // ocupa toda a largura se não passar width
       child: TextFormField(
         maxLines: maxLines ?? 1,
-        maxLength: maxLength ?? 50,
+        maxLength: maxLength ?? 40,
         controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(

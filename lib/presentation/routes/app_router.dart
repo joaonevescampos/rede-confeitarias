@@ -14,6 +14,10 @@ class AppRouter {
       case '/store-details':
         // final args = settings.arguments;
         return MaterialPageRoute(builder: (_) => StoreDetail()); // se precisar passar argumentos
+      // case '/update-store':
+      //   return MaterialPageRoute(builder: (_) => const UpdateStore());
+      // case '/update-product':
+      //   return MaterialPageRoute(builder: (_) => const UpdateProduct());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
