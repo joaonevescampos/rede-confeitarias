@@ -218,7 +218,7 @@ Atualização de uma loja informando o id no path.
 
 **PUT /product/:id**
 
-Atualização de um produto pertencente a uma loja informando o id no path do produto a ser atualizado e a loja correspondente.
+Atualização de um produto pertencente a uma loja informando o id no path.
 
 - Exemplo de requisição:
 
