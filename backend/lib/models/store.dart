@@ -1,33 +1,33 @@
 class Store {
-  final String storeName;
+  final String store_name;
   final String phone;
   final String cep;
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
   final String city;
-  final String state;
+  final String uf;
   final String address;
 
   Store({
-    required this.storeName,
+    required this.store_name,
     required this.phone,
     required this.cep,
     required this.latitude,
     required this.longitude,
     required this.city,
-    required this.state,
+    required this.uf,
     required this.address,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'store_name': storeName,
+      'store_name': store_name,
       'phone': phone,
       'cep': cep,
       'latitude': latitude,
       'longitude': longitude,
       'city': city,
-      'state': state,
+      'uf': uf,
       'address': address,
     };
   }

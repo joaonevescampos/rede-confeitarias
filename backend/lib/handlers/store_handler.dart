@@ -3,7 +3,7 @@ import 'package:shelf/shelf.dart';
 import '../db/connection.dart';
 import '../models/store.dart';
 
-// GET /stores - Listagem de lojas
+// GET /store - Listagem de lojas
 Future<Response> getStoresHandler(Request request) async {
   try {
     final result = await DB.connection.query('SELECT * FROM stores');
@@ -11,7 +11,8 @@ Future<Response> getStoresHandler(Request request) async {
     // Transforma cada linha do resultado em um Map legível (coluna: valor)
     final stores = result.map((row) => row.toColumnMap()).toList();
 
-    return Response.ok(jsonEncode(stores), headers: {
+    return Response.ok(jsonEncode(stores), 
+    headers: {
       'Content-Type': 'application/json',
     });
 
@@ -30,6 +31,17 @@ Future<Response> getStoreDetailHandler(Request request, String idParam) async {
   try {
     // Verifica se o id é válido
     final id = int.tryParse(idParam);
+
+    // Validação de ID 
+    final findData = await DB.connection.query(
+      'SELECT * FROM stores WHERE id = @id',
+      substitutionValues: {'id': id},
+    );
+
+    if (findData.isEmpty) {
+      return Response.notFound(jsonEncode({'erro': 'Loja não encontrada. Insira um ID válido.'}));
+    }
+
     if (id == null) {
       return Response(400, body: jsonEncode({'error': 'ID inválido'}));
     }
@@ -73,26 +85,26 @@ Future<Response> createStoreHandler(Request request) async {
       data['latitude'] == null ||
       data['longitude'] == null || 
       data['city'] == null ||
-      data['state'] == null || 
+      data['uf'] == null || 
       data['address'] == null
     ) {
       return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
     }
 
     final store = Store(
-      storeName: data['store_name'],
+      store_name: data['store_name'],
       phone: data['phone'],
       cep: data['cep'],
       latitude: data['latitude'],
       longitude: data['longitude'],
       city: data['city'],
-      state: data['state'],
+      uf: data['uf'],
       address: data['address'],
     );
 
     await DB.connection.query('''
-      INSERT INTO stores (store_name, phone, cep, latitude, longitude, city, state, address)
-      VALUES (@storeName, @phone, @cep, @latitude, @longitude, @city, @state, @address)
+      INSERT INTO stores (store_name, phone, cep, latitude, longitude, city, uf, address)
+      VALUES (@store_name, @phone, @cep, @latitude, @longitude, @city, @uf, @address)
     ''', substitutionValues: store.toMap());
 
     return Response.ok(jsonEncode(
@@ -116,6 +128,16 @@ Future<Response> updateStoreHandler(Request request, String idParam) async {
   try {
     final id = int.tryParse(idParam);
 
+    // Validação de ID 
+    final findData = await DB.connection.query(
+      'SELECT * FROM stores WHERE id = @id',
+      substitutionValues: {'id': id},
+    );
+
+    if (findData.isEmpty) {
+      return Response.notFound(jsonEncode({'erro': 'Loja não encontrada. Insira um ID válido.'}));
+    }
+
     // Verificação se o ID é válido
     if (id == null) {
       return Response(400, body: jsonEncode({'error': 'ID inválido'}));
@@ -131,7 +153,7 @@ Future<Response> updateStoreHandler(Request request, String idParam) async {
       data['latitude'] == null ||
       data['longitude'] == null || 
       data['city'] == null ||
-      data['state'] == null || 
+      data['uf'] == null || 
       data['address'] == null
     ) {
       return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
@@ -139,24 +161,24 @@ Future<Response> updateStoreHandler(Request request, String idParam) async {
 
     await DB.connection.query('''
       UPDATE stores SET 
-        store_name = @storeName,
+        store_name = @store_name,
         phone = @phone,
         cep = @cep,
         latitude = @latitude,
         longitude = @longitude,
         city = @city,
-        state = @state,
+        uf = @uf,
         address = @address
       WHERE id = @id
     ''', substitutionValues: {
       'id': id,
-      'storeName': data['store_name'],
+      'store_name': data['store_name'],
       'phone': data['phone'],
       'cep': data['cep'],
       'latitude': data['latitude'],
       'longitude': data['longitude'],
       'city': data['city'],
-      'state': data['state'],
+      'uf': data['uf'],
       'address': data['address'],
     });
 
@@ -180,6 +202,16 @@ Future<Response> updateStoreHandler(Request request, String idParam) async {
 Future<Response> deleteStoreHandler(Request request, String idParam) async {
   try {
     final id = int.tryParse(idParam);
+
+    // Validação de ID 
+    final findData = await DB.connection.query(
+      'SELECT * FROM stores WHERE id = @id',
+      substitutionValues: {'id': id},
+    );
+
+    if (findData.isEmpty) {
+      return Response.notFound(jsonEncode({'erro': 'Loja não encontrada. Insira um ID válido.'}));
+    }
 
     if(id == null) {
       return Response(400, body: jsonEncode( {'erro':'ID inválido'}));

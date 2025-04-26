@@ -3,28 +3,6 @@ import 'package:shelf/shelf.dart';
 import '../db/connection.dart';
 import '../models/product.dart';
 
-// GET /products - Listagem de produtos
-Future<Response> getProductsHandler(Request request) async {
-  try {
-    final result = await DB.connection.query('SELECT * FROM products');
-
-    // Transforma cada linha do resultado em um Map legível (coluna: valor)
-    final products = result.map((row) => row.toColumnMap()).toList();
-
-    return Response.ok(jsonEncode(products), headers: {
-      'Content-Type': 'application/json',
-    });
-
-  } catch (error) {
-    print('Erro ao buscar produtos: $error');
-
-    return Response.internalServerError(
-      body: jsonEncode({'error': 'Erro ao buscar produtos'}),
-      headers: {'Content-Type': 'application/json'},
-    );
-  }
-}
-
 // GET - /product/:id - Detalhes de uma Produto específica
 Future<Response> getProductDetailHandler(Request request, String idParam) async {
   try {
@@ -34,14 +12,14 @@ Future<Response> getProductDetailHandler(Request request, String idParam) async 
       return Response(400, body: jsonEncode({'error': 'ID inválido'}));
     }
 
+    // Validação de ID 
     final result = await DB.connection.query(
       'SELECT * FROM products WHERE id = @id',
       substitutionValues: {'id': id},
     );
 
-    // Verifica se encontrou alguma Produto
     if (result.isEmpty) {
-      return Response(404, body: jsonEncode({'erro': 'Produto não encontrada'}));
+      return Response(404, body: jsonEncode({'erro': 'Produto não encontrado. Insira um ID válido.'}));
     }
 
     final product = result.first.toColumnMap();
@@ -70,21 +48,22 @@ Future<Response> createProductHandler(Request request) async {
       data['product_name'] == null || 
       data['price'] == null ||
       data['description'] == null || 
-      data['imageUrl'] == null
+      data['image_url'] == null
     ) {
       return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
     }
 
     final product = Product(
-      productName: data['product_name'],
+      store_id: data['store_id'],
+      product_name: data['product_name'],
       price: data['price'],
       description: data['description'],
-      imageUrl: data['imageUrl'],
+      image_url: data['image_url'],
     );
 
     await DB.connection.query('''
-      INSERT INTO products (product_name, price, description, imageUrl)
-      VALUES (@productName, @price, @description, @imageUrl)
+      INSERT INTO products (store_id, product_name, price, description, image_url)
+      VALUES (@store_id, @product_name, @price, @description, @image_url)
     ''', substitutionValues: product.toMap());
 
     return Response.ok(jsonEncode(
@@ -108,9 +87,19 @@ Future<Response> updateProductHandler(Request request, String idParam) async {
   try {
     final id = int.tryParse(idParam);
 
+    // Validação de ID 
+    final findData = await DB.connection.query(
+      'SELECT * FROM products WHERE id = @id',
+      substitutionValues: {'id': id},
+    );
+
+    if (findData.isEmpty) {
+      return Response.notFound(jsonEncode({'erro': 'Produto não encontrado. Insira um ID válido.'}));
+    }
+
     // Verificação se o ID é válido
     if (id == null) {
-      return Response(400, body: jsonEncode({'error': 'ID inválido'}));
+      return Response(400, body: jsonEncode({'erro': 'ID inválido'}));
     }
 
     final body = await request.readAsString();
@@ -120,24 +109,24 @@ Future<Response> updateProductHandler(Request request, String idParam) async {
       data['product_name'] == null || 
       data['price'] == null ||
       data['description'] == null || 
-      data['imageUrl'] == null
+      data['image_url'] == null
     ) {
       return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
     }
 
     await DB.connection.query('''
       UPDATE products SET 
-        product_name = @productName,
+        product_name = @product_name,
         price = @price,
         description = @description,
-        imageUrl = @imageUrl,
+        image_url = @image_url
       WHERE id = @id
     ''', substitutionValues: {
       'id': id,
-      'productName': data['product_name'],
+      'product_name': data['product_name'],
       'price': data['price'],
       'description': data['description'],
-      'imageUrl': data['imageUrl'],
+      'image_url': data['image_url'],
     });
 
     return Response.ok(jsonEncode(
@@ -161,6 +150,19 @@ Future<Response> deleteProductHandler(Request request, String idParam) async {
   try {
     final id = int.tryParse(idParam);
 
+    // Validação de ID 
+    final findData = await DB.connection.query(
+      'SELECT * FROM products WHERE id = @id',
+      substitutionValues: {'id': id},
+    );
+
+    print(findData);
+
+    if (findData.isEmpty) {
+      return Response.notFound(jsonEncode({'erro': 'Produto não encontrado. Insira um ID válido.'}));
+    }
+
+    // Validação de ID nulo
     if(id == null) {
       return Response(400, body: jsonEncode( {'erro':'ID inválido'}));
     }

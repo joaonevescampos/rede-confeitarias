@@ -4,9 +4,9 @@ class DB {
   static final connection = PostgreSQLConnection(
     'localhost', // host
     5432,        // porta
-    'confeitarias_db', // nome do banco
+    'rede_confeitarias', // nome do banco
     username: 'postgres',
-    password: 'sua_senha',
+    password: '3201',
   );
 
   static Future<void> connect() async {

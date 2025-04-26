@@ -60,24 +60,28 @@ Detalhamento de todas as lojas cadastradas.
 
 ```
 [
-    {
-        id: '1',
-        storeName: 'Loja 1',
-        cep: '12345678',
-        coordenates: ['123456789', '789456123'],
-    },
-     {
-        id: '2',
-        storeName: 'Loja 2',
-        cep: '78945612',
-        coordenates: ['3211212123', '1231321423'],
-    },
-     {
-        id: '1',
-        storeName: 'Loja 1',
-        cep: '33231215',
-        coordenates: ['451231564', '584651213'],
-    },
+	{
+		"id": 1,
+		"store_name": "Confeitaria JJ",
+		"phone": "995456123",
+		"cep": "01310100",
+		"latitude": "-23.550520",
+		"longitude": "-46.633308",
+		"city": "João Pessoa",
+		"uf": "PB",
+		"address": "Casa da mãe Joana"
+	},
+	{
+		"id": 2,
+		"store_name": "Confeitaria 2",
+		"phone": "995456123",
+		"cep": "01310100",
+		"latitude": "-23.550520",
+		"longitude": "-46.633308",
+		"city": "João Pessoa",
+		"uf": "PB",
+		"address": "Casa da mãe Joana"
+	}
 ]
 
 ```
@@ -137,10 +141,14 @@ Cadastro de uma loja.
 
 ```
 {
-    storeName: 'Confeitaria JJ',
-    phone: '995456123',
-    cep: '12345678',
-    coordenates: ['123456789', '789456123'],
+    "store_name": "Confeitaria JJ",
+    "phone": "995456123",
+    "cep": "01310100",
+    "latitude": -23.550520,
+    "longetude": -46.633308,
+    "city": "João Pessoa",
+    "uf": "PB",
+    "address": "Casa da mãe Joana"
 }
 
 ```
@@ -149,11 +157,7 @@ Cadastro de uma loja.
 
 ```
 {
-    id: '1',
-    storeName: 'Confeitaria JJ',
-    phone: '995456123',
-    cep: '12345678',
-    coordenates: ['123456789', '789456123'],
+	"mensagem": "Loja atualizada com sucesso!"
 }
 
 ```
@@ -195,10 +199,14 @@ Atualização de uma loja informando o id no path.
 
 ```
 {
-    storeName: 'Confeitaria JJ Atualizada',
-    phone: '995456123',
-    cep: '12345678',
-    coordenates: ['123456789', '789456123'],
+	"store_name": "Confeitaria Atualizado",
+	"phone": "995456123",
+	"cep": "01310100",
+	"latitude": "-23.550520",
+	"longitude": "-46.633308",
+	"city": "João Pessoa",
+	"uf": "PB",
+	"address": "Casa da mãe Joana"
 }
 
 ```
@@ -207,11 +215,7 @@ Atualização de uma loja informando o id no path.
 
 ```
 {
-    id: '1',
-    storeName: 'Confeitaria JJ Atualizada',
-    phone: '995456123',
-    cep: '12345678',
-    coordenates: ['123456789', '789456123'],
+	"mensagem": "Loja atualizada com sucesso!"
 }
 
 ```
