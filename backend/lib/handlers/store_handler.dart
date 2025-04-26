@@ -66,6 +66,19 @@ Future<Response> createStoreHandler(Request request) async {
     final body = await request.readAsString();
     final data = jsonDecode(body);
 
+    if (
+      data['store_name'] == null || 
+      data['phone'] == null ||
+      data['cep'] == null || 
+      data['latitude'] == null ||
+      data['longitude'] == null || 
+      data['city'] == null ||
+      data['state'] == null || 
+      data['address'] == null
+    ) {
+      return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
+    }
+
     final store = Store(
       storeName: data['store_name'],
       phone: data['phone'],
@@ -98,7 +111,7 @@ Future<Response> createStoreHandler(Request request) async {
   }
 }
 
-// Cadastro de Loja - PUT /store/:id
+// Atualização de Loja - PUT /store/:id
 Future<Response> updateStoreHandler(Request request, String idParam) async {
   try {
     final id = int.tryParse(idParam);
@@ -110,6 +123,19 @@ Future<Response> updateStoreHandler(Request request, String idParam) async {
 
     final body = await request.readAsString();
     final data = jsonDecode(body);
+
+     if (
+      data['store_name'] == null || 
+      data['phone'] == null ||
+      data['cep'] == null || 
+      data['latitude'] == null ||
+      data['longitude'] == null || 
+      data['city'] == null ||
+      data['state'] == null || 
+      data['address'] == null
+    ) {
+      return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
+    }
 
     await DB.connection.query('''
       UPDATE stores SET 
