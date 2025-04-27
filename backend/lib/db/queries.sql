@@ -10,7 +10,6 @@ CREATE TABLE stores (
   city VARCHAR(50) NOT NULL,
   uf VARCHAR(2) NOT NULL,
   address VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Data de criação
 );
 
 CREATE TABLE products (
@@ -19,12 +18,6 @@ CREATE TABLE products (
   product_name VARCHAR(100) NOT NULL,
   price NUMERIC(10,2) NOT NULL,
   description TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Data de criação
+  image_url VARCHAR(255) NOT NULL,
 );
 
-CREATE TABLE product_images (
-  id SERIAL PRIMARY KEY,
-  product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
-  image_url VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Data de criação
-);
