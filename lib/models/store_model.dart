@@ -8,6 +8,7 @@ class Store {
   final String city;
   final String uf;
   final String address;
+  final String neighborhood;
 
   Store({
     this.id,
@@ -19,6 +20,8 @@ class Store {
     required this.city,
     required this.uf,
     required this.address,
+    required this.neighborhood,
+
   });
 
   // Converte o objeto Store para um Map
@@ -33,6 +36,7 @@ class Store {
       'city': city,
       'uf': uf,
       'address': address,
+      'neighborhood': neighborhood
     };
   }
 
@@ -48,6 +52,8 @@ class Store {
       city: json['city'],
       uf: json['uf'],
       address: json['address'],
+      neighborhood: json['neighborhood'],
+
     );
   }
 }

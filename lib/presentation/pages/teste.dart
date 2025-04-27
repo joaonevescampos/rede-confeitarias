@@ -22,6 +22,7 @@ class _CreateStorePageState extends State<CreateStorePage> {
     latitude: -73.985428,
     address: 'Rua das Flores, 123',
     city: 'Cidade Exemplo',
+    neighborhood: 'teste',
     uf: 'SP',
     cep: '12345000',
   );

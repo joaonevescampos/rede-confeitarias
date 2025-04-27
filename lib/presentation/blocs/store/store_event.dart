@@ -13,7 +13,7 @@ class GetAllStoresEvent extends StoreEvent {}
 class CreateStoreEvent extends StoreEvent {
   final Store store;
 
-  const CreateStoreEvent(this.store);
+  const CreateStoreEvent({required this.store});
 
   @override
   List<Object?> get props => [store];

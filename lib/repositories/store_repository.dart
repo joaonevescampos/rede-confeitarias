@@ -32,7 +32,8 @@ class StoreRepository {
             longitude REAL,
             city TEXT,
             uf TEXT,
-            address TEXT
+            address TEXT,
+            neighborhood TEXT
           )
         ''');
       },
