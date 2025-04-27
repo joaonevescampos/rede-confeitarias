@@ -33,9 +33,9 @@ class _CreateStorePageState extends State<CreateStorePage> {
       setState(() {
         _responseMessage = 'Loja criada com sucesso! ID: $storeId';
       });
-    } catch (e) {
+    } catch (error) {
       setState(() {
-        _responseMessage = 'Erro ao criar loja: $e';
+        _responseMessage = 'Erro ao criar loja: $error';
       });
     }
   }
@@ -48,9 +48,9 @@ class _CreateStorePageState extends State<CreateStorePage> {
         _stores = stores;
         _responseMessage = 'Lojas listadas com sucesso!';
       });
-    } catch (e) {
+    } catch (error) {
       setState(() {
-        _responseMessage = 'Erro ao listar lojas: $e';
+        _responseMessage = 'Erro ao listar lojas: $error';
       });
     }
   }
@@ -80,7 +80,6 @@ class _CreateStorePageState extends State<CreateStorePage> {
               onPressed: _listStores,
               child: Text('Listar Todas as Lojas'),
             ),
-            SizedBox(height: 20),
             Text(
               _responseMessage,
               style: TextStyle(
