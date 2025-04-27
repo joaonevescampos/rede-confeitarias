@@ -1,58 +1,65 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DBHelper {
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  factory DatabaseHelper() => _instance;
   static Database? _database;
-  static const String DB_NAME = 'app_database.db';
 
-  // Método para inicializar o banco de dados
+  DatabaseHelper._internal();
+
+  // Cria ou abre o banco de dados
   Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDatabase();
-    return _database!;
+    if (_database != null) {
+      return _database!;
+    } else {
+      _database = await _initDatabase();
+      return _database!;
+    }
   }
 
   // Inicializa o banco de dados
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), DB_NAME);
-    return openDatabase(
-      path,
-      onCreate: (db, version) async {
-        // Aqui você pode criar suas tabelas
-        await db.execute('''
-          CREATE TABLE stores(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            storeName TEXT,
-            phone TEXT,
-            cep TEXT,
-            latitude REAL,
-            longitude REAL,
-            city TEXT,
-            uf TEXT,
-            address TEXT
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE products(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            storeId INTEGER,
-            productName TEXT,
-            price REAL,
-            description TEXT,
-            imageUrl TEXT,
-            FOREIGN KEY(storeId) REFERENCES stores(id)
-          )
-        ''');
-      },
-      version: 1,
-    );
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'rede_confeitarias.db');
+
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
-  // Função para fechar o banco de dados
+  // Criação das tabelas no banco de dados
+  Future<void> _onCreate(Database db, int version) async {
+    // Criação da tabela 'stores' (exemplo)
+    await db.execute('''
+      CREATE TABLE stores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        store_name TEXT,
+        address TEXT,
+        city TEXT,
+        uf TEXT,
+        cep TEXT,
+        latitude REAL,
+        longitude REAL,
+        phone TEXT
+      )
+    ''');
+
+    // Criação da tabela 'products'
+    await db.execute('''
+      CREATE TABLE products (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        store_id INTEGER,  -- Relacionamento com a tabela 'stores'
+        name TEXT,
+        description TEXT,
+        price REAL,
+        image_url TEXT,
+        FOREIGN KEY(store_id) REFERENCES stores(id)
+      )
+    ''');
+  }
+
+  // Método para fechar o banco de dados
   Future<void> close() async {
-    var dbClient = await database;
-    dbClient.close();
+    final db = await database;
+    db.close();
   }
 }
