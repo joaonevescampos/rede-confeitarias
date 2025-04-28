@@ -9,7 +9,6 @@ import 'package:rede_confeitarias/presentation/pages/product_register.dart';
 import 'package:rede_confeitarias/repositories/store_repository.dart';
 import 'package:rede_confeitarias/repositories/product_repository.dart';
 
-
 class StoreDetail extends StatefulWidget {
   final int? idStore;
 

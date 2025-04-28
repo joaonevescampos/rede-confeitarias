@@ -6,6 +6,7 @@ import 'package:rede_confeitarias/models/product_model.dart';
 import 'package:rede_confeitarias/presentation/components/add_image.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
+import 'package:rede_confeitarias/presentation/pages/store_detail.dart';
 import 'package:rede_confeitarias/repositories/product_repository.dart';
 class ProductRegister extends StatefulWidget {
   final int? idStore;
@@ -22,6 +23,7 @@ class _ProductRegisterState extends State<ProductRegister> {
   final priceController = TextEditingController();
   final descriptionController = TextEditingController();
   final ProductRepository _storeRepository = ProductRepository();
+  final alternativeImage = 'https://media.istockphoto.com/id/1394758946/pt/vetorial/no-image-raster-symbol-missing-available-icon-no-gallery-for-this-moment-placeholder.jpg?s=612x612&w=0&k=20&c=7ay7BmjmllrzxhLs8iGE9CbhNtxaGXiIvyV6nShL9Zg=';
   String responseMessage = '';
   List<Product> productsData = [];
   List<File> selectedImages = [];
@@ -121,14 +123,14 @@ class _ProductRegisterState extends State<ProductRegister> {
                       responseMessage = 'Loja não encontrada.';
                     });
                     return;
-  }
+                  }
 
                  final Product productData = Product(
                         storeId: widget.idStore!,
                         productName: productName,
                         price: price as double,
                         description: description,
-                        imageUrl: images[0] as String,
+                        imageUrl: images[0] as String
                       );
 
                  //Função paraq criar produto
@@ -149,7 +151,12 @@ class _ProductRegisterState extends State<ProductRegister> {
                   style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                 );
 
-                Navigator.pushNamed(context, '/store-details');
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StoreDetail(idStore: widget.idStore),
+                        ),
+                      );
                 
               } else {
                 // Caso algum campo obrigatório esteja vazio
