@@ -73,7 +73,7 @@ Na pasta lib/presentation fica o frontend da aplicação, lib/components são os
 
 ## Design
 ![alt text](image-1.png)
-Todo design foi pensado e executado de forma a garantir facilidade ao usuário sem abrir mão da beleza. Foi criado todo design no Figma, onde é possível ver po este link:
+Todo design foi pensado e executado de forma a garantir facilidade ao usuário sem abrir mão da beleza. Foi criado todo design no Figma, onde é possível ver por meio deste link:
 
 https://www.figma.com/design/1gaJ4eDCLHtCSpMotuywV7/confeitaria?node-id=0-1&m=dev&t=f8OraTMFj0crwn7R-1
 
