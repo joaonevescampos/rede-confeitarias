@@ -71,6 +71,12 @@ Pronto! Seu projeto  já irá rodar normalmente e poderá testá-lo tanto no pr�
 
 Na pasta lib/presentation fica o frontend da aplicação, lib/components são os widgets reutilizáveis, lib/core são as configurações de tema do app, lib/db conexão do banco de dados, lib/models são os modelos de dados das tabelas stores e products, repositories são responsáveis pela comunicação entre a camada de dados e a camada de negócios da aplicação, e o lib/services são serviços de funções reutilizáveis.
 
+## Design
+![alt text](image-1.png)
+Todo design foi pensado e executado de forma a garantir facilidade ao usuário sem abrir mão da beleza. Foi criado todo design no Figma, onde é possível ver po este link:
+
+https://www.figma.com/design/1gaJ4eDCLHtCSpMotuywV7/confeitaria?node-id=0-1&m=dev&t=f8OraTMFj0crwn7R-1
+
 ## Banco de Dados
 
 A título de curiosidade, iniciamente criei um backend com banco online sem ser com Drift. Não quis simplesmente apagar o que fiz, tanto o código como a documentação.
