@@ -53,7 +53,6 @@ class Store {
       uf: json['uf'],
       address: json['address'],
       neighborhood: json['neighborhood'],
-
     );
   }
 }

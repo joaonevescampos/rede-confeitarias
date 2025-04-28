@@ -1,44 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
+import 'package:rede_confeitarias/models/product_model.dart';
+import 'package:rede_confeitarias/models/store_model.dart';
 import 'package:rede_confeitarias/presentation/components/add_button.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/product_widget.dart';
 import 'package:rede_confeitarias/presentation/pages/product_register.dart';
+import 'package:rede_confeitarias/repositories/store_repository.dart';
+import 'package:rede_confeitarias/repositories/product_repository.dart';
+
 
 class StoreDetail extends StatefulWidget {
-  const StoreDetail({super.key});
+  final int? idStore;
+
+  const StoreDetail({Key? key, required this.idStore}) : super(key: key);
   @override
   State<StoreDetail> createState() => _StoreDetailState();
 }
 
 class _StoreDetailState extends State<StoreDetail> {
-  //este dado tem que vir do backend (por meio do id, pego as coordenadas de cada loja)
-  final coordenates = [LatLng(-7.04105, -34.841602)];
-  String storeName = 'Confeitaria do João em Inter - Cabedelo';
-  final products = [
-  {
-    'id': '1',
-    'productName': 'Produto com um nome muito longo para minha loja',
-    'price': 12.90,
-    'description': 'Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla',
-    'imageUrl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNulBAmbFLYlWLOcQ9d32jzj2XLyMgOkmPeg&s', // exemplo de URL de imagem
-  },
-  {
-    'id': '2',
-    'productName': 'Produto 2',
-    'price': 12.90,
-    'description': 'Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla',
-    'imageUrl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNulBAmbFLYlWLOcQ9d32jzj2XLyMgOkmPeg&s', // exemplo de URL de imagem
-  },
-  {
-    'id': '3',
-    'productName': 'Produto 3',
-    'price': 12.90,
-    'description': 'Descrição bla bla bla bla bla blabla bla blabla bla blabla bla bla',
-    'imageUrl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNulBAmbFLYlWLOcQ9d32jzj2XLyMgOkmPeg&s', // exemplo de URL de imagem
+   Store? storeData;
+   final ProductRepository _storeRepository = ProductRepository();
+  String responseMessage = '';
+  List<Product> productsData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchStore();
   }
-];
+
+  Future<void> fetchStore() async {
+     if (widget.idStore == null) {
+    setState(() {
+      productsData = [];
+      responseMessage = 'Loja não encontrada.';
+    });
+    return;
+  }
+    // Exemplo: usando seu StoreRepository para pegar a loja
+    final products = await _storeRepository.getProductsByStoreId(widget.idStore!);
+    
+    setState(() {
+      productsData = products;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +67,7 @@ class _StoreDetailState extends State<StoreDetail> {
               Container(
                 width: 280,
                 child: Center(
-                  child: Text('$storeName', 
+                  child: Text('Nome da loja', 
                     style: TextStyle(
                       color: AppColors.secondary, 
                       fontSize: 20, 
@@ -82,7 +88,7 @@ class _StoreDetailState extends State<StoreDetail> {
             ],
           ),
           SizedBox(height: 20,),
-          if(products.isEmpty)
+          if(productsData.isEmpty)
             Container(
               child: Center(
                 child: Text('Tenta acesso a todos produtos cadastrados desta loja. Aperte no botão + para criar novo produto.', 
@@ -94,15 +100,15 @@ class _StoreDetailState extends State<StoreDetail> {
                 )
               )
             ), 
-          if(products.isNotEmpty)
-            ...products.map((product) {
+          if(productsData.isNotEmpty)
+            ...productsData.map((product) {
               return Column(
                 children: [
                   ProductInfo(
-                    productName: product['productName'] as String,
-                    price: product['price'] as double,
-                    description: product['description'] as String,
-                    imageUrl: product['imageUrl'] as String,
+                    productName: product.productName,
+                    price: product.price,
+                    description: product.description,
+                    imageUrl: product.imageUrl,
                   ),
                   const SizedBox(height: 10,)
                 ],
@@ -116,7 +122,7 @@ class _StoreDetailState extends State<StoreDetail> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const ProductRegister()),
+                MaterialPageRoute(builder: (_) => ProductRegister(idStore: widget.idStore)),
               );
             },
           ),

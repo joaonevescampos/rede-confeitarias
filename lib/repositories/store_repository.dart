@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:path/path.dart';
 
 class StoreRepository {
-  // Variável que guarda a instância do banco
   static Database? _database;
 
   // Método que retorna a instância do banco de dados
@@ -47,7 +46,7 @@ class StoreRepository {
     return await db.insert(
       'stores',
       store.toJson(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      conflictAlgorithm: ConflictAlgorithm.replace, // Confirme o uso de replace
     );
   }
 
@@ -95,3 +94,4 @@ class StoreRepository {
     );
   }
 }
+

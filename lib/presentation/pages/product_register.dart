@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
+import 'package:rede_confeitarias/models/product_model.dart';
 import 'package:rede_confeitarias/presentation/components/add_image.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
+import 'package:rede_confeitarias/repositories/product_repository.dart';
 class ProductRegister extends StatefulWidget {
-  const ProductRegister({super.key});
+  final int? idStore;
+
+  const ProductRegister({Key? key, required this.idStore}) : super(key: key);
 
   @override
   State<ProductRegister> createState() => _ProductRegisterState();
@@ -17,7 +21,9 @@ class _ProductRegisterState extends State<ProductRegister> {
   final productNameController = TextEditingController();
   final priceController = TextEditingController();
   final descriptionController = TextEditingController();
-    
+  final ProductRepository _storeRepository = ProductRepository();
+  String responseMessage = '';
+  List<Product> productsData = [];
   List<File> selectedImages = [];
 
   void _handleImagesSelected(List<File> images) {
@@ -109,11 +115,33 @@ class _ProductRegisterState extends State<ProductRegister> {
                 final description = descriptionController.text;
                 final images = selectedImages;
 
-                // Aqui você pode continuar com o envio, salvar no banco de dados ou o que quiser
-                print('Nome: $productName');
-                print('Telefone: $price');
-                print('CEP: $description');
-                print('Cidade: $images');
+                   if (widget.idStore == null) {
+                    setState(() {
+                      productsData = [];
+                      responseMessage = 'Loja não encontrada.';
+                    });
+                    return;
+  }
+
+                 final Product productData = Product(
+                        storeId: widget.idStore!,
+                        productName: productName,
+                        price: price as double,
+                        description: description,
+                        imageUrl: images[0] as String,
+                      );
+
+                 //Função paraq criar produto
+                      try {
+                        final storeId = await _storeRepository.createProduct(productData);
+                        setState(() {
+                          responseMessage = 'Produto criado com sucesso!';
+                        });
+                      } catch (error) {
+                        setState(() {
+                          responseMessage = 'Erro ao criar produto.';
+                        });
+                      }
 
                 // Exemplo de feedback visual
                 ScaffoldMessenger.of(context).showSnackBar(

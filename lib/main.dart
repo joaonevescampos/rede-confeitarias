@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rede_confeitarias/presentation/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
