@@ -67,12 +67,12 @@ flutter run
 Pronto! Seu projeto  já irá rodar normalmente e poderá testá-lo tanto no próprio VSCode, ou usando seu celular, conectando-o ao computador via UsB. Lembre de selecionar seu dispositivo e ativar o comode desenvolvedor nas configurações do seu celular.
 
 ## Estrutura de pastas
-![alt text](image.png)
+![alt text](/lib/assets/images/image.png)
 
 Na pasta lib/presentation fica o frontend da aplicação, lib/components são os widgets reutilizáveis, lib/core são as configurações de tema do app, lib/db conexão do banco de dados, lib/models são os modelos de dados das tabelas stores e products, repositories são responsáveis pela comunicação entre a camada de dados e a camada de negócios da aplicação, e o lib/services são serviços de funções reutilizáveis.
 
 ## Design
-![alt text](image-1.png)
+![alt text](/lib/assets/images/image-1.png)
 Todo design foi pensado e executado de forma a garantir facilidade ao usuário sem abrir mão da beleza. Foi criado todo design no Figma, onde é possível ver por meio deste link:
 
 https://www.figma.com/design/1gaJ4eDCLHtCSpMotuywV7/confeitaria?node-id=0-1&m=dev&t=f8OraTMFj0crwn7R-1

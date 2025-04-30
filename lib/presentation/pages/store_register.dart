@@ -28,6 +28,7 @@ class _StoreRegisterState extends State<StoreRegister> {
   final StoreRepository _storeRepository = StoreRepository();
   String responseMessage = '';
   List<Store> storesData = [];
+  int varStoreId = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -199,8 +200,8 @@ class _StoreRegisterState extends State<StoreRegister> {
                       final Store storeData = Store(
                         storeName: storeName,
                         phone: phone,
-                        longitude: coordenates?.longitude ?? 0.0, //como eu pego latitude?
-                        latitude: coordenates?.latitude ?? 0.0, //como eu pego latitude?
+                        longitude: coordenates?.longitude ?? 0.0, 
+                        latitude: coordenates?.latitude ?? 0.0, 
                         address: address,
                         city: city,
                         neighborhood: neighborhood,
@@ -208,10 +209,12 @@ class _StoreRegisterState extends State<StoreRegister> {
                         cep: cep,
                       );
 
-                      //Função paraq criar loja
+                      //Função para criar loja
                       try {
                         final storeId = await _storeRepository.createStore(storeData);
+                        print('storeId: $storeId');
                         setState(() {
+                          varStoreId = storeId;
                           responseMessage = 'Loja criada com sucesso! ID: $storeId';
                         });
                       } catch (error) {
@@ -219,6 +222,8 @@ class _StoreRegisterState extends State<StoreRegister> {
                           responseMessage = 'Erro ao criar loja: $error';
                         });
                       }
+
+                      
 
                       // Função para listar todas as lojas
                         try {
@@ -239,11 +244,11 @@ class _StoreRegisterState extends State<StoreRegister> {
                         style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                       );
 
-                      print(storeData.id);
+                      print('varStoreId: $varStoreId');
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => StoreDetail(idStore: storeData.id),
+                          builder: (context) => StoreDetail(idStore: varStoreId),
                         ),
                       );
                     } else {

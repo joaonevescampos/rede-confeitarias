@@ -22,7 +22,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(ProductLoading());
     try {
       final products = await _productRepository.getProductsByStoreId(event.storeId);
-      emit(ProductLoaded(products));
+      emit(ProductLoaded(products: products));
     } catch (e) {
       emit(ProductError('Erro ao carregar produtos'));
     }
@@ -36,7 +36,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(ProductLoading());
     try {
       final product = await _productRepository.getProductById(event.productId);
-      emit(ProductSingleLoaded(product));
+      emit(ProductLoaded(product: product));
     } catch (e) {
       emit(ProductError('Erro ao carregar produto'));
     }
@@ -51,7 +51,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       await _productRepository.createProduct(event.product);
       final products = await _productRepository.getProductsByStoreId(event.product.storeId); // atualiza lista
-      emit(ProductLoaded(products));
+      emit(ProductLoaded(products: products));
     } catch (e) {
       emit(ProductError('Erro ao criar produto'));
     }
@@ -66,7 +66,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       await _productRepository.deleteProduct(event.productId);
       final products = await _productRepository.getProductsByStoreId(event.productId); // atualiza lista
-      emit(ProductLoaded(products));
+      emit(ProductLoaded(products: products));
     } catch (e) {
       emit(ProductError('Erro ao excluir produto'));
     }
@@ -81,7 +81,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       await _productRepository.updateProduct(event.product);
       final products = await _productRepository.getProductsByStoreId(event.product.storeId); // atualiza lista
-      emit(ProductLoaded(products));
+      emit(ProductLoaded(products: products));
     } catch (e) {
       emit(ProductError('Erro ao editar produto'));
     }

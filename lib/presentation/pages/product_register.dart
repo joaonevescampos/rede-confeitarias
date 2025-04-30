@@ -113,7 +113,7 @@ class _ProductRegisterState extends State<ProductRegister> {
               // Verifica se o formulário é válido (todos os campos obrigatórios preenchidos)
               if (_formKey.currentState!.validate()) {
                 final productName = productNameController.text;
-                final price = priceController.text;
+                final price = double.parse(priceController.text);
                 final description = descriptionController.text;
                 final images = selectedImages;
 
@@ -125,23 +125,24 @@ class _ProductRegisterState extends State<ProductRegister> {
                     return;
                   }
 
+
                  final Product productData = Product(
                         storeId: widget.idStore!,
                         productName: productName,
-                        price: price as double,
+                        price: price,
                         description: description,
-                        imageUrl: images[0] as String
+                        imageUrl: images[0].path,
                       );
 
-                 //Função paraq criar produto
+                 //Função para criar produto
                       try {
-                        final storeId = await _storeRepository.createProduct(productData);
+                        final productId = await _storeRepository.createProduct(productData);
                         setState(() {
-                          responseMessage = 'Produto criado com sucesso!';
+                          responseMessage = 'Produto criado com sucesso! ID: $productId';
                         });
                       } catch (error) {
                         setState(() {
-                          responseMessage = 'Erro ao criar produto.';
+                          responseMessage = 'Erro ao criar produto. $error';
                         });
                       }
 

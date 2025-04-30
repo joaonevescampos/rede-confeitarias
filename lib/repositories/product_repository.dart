@@ -18,7 +18,7 @@ class ProductRepository {
   }
 
   // Lista um produto específico pelo ID
-  Future<Product> getProductById(int id) async {
+  Future<Product?> getProductById(int id) async {
     final db = await _databaseHelper.database;
     final List<Map<String, dynamic>> maps = await db.query(
       'products',
@@ -32,15 +32,15 @@ class ProductRepository {
   }
 
   // Cria um novo produto
-  Future<void> createProduct(Product product) async {
+  Future<int> createProduct(Product product) async {
     final db = await _databaseHelper.database;
-    await db.insert('products', product.toJson());
+    return await db.insert('products', product.toJson());
   }
 
   // Exclui um produto
-  Future<void> deleteProduct(int productId) async {
+  Future<int> deleteProduct(int productId) async {
     final db = await _databaseHelper.database;
-    await db.delete(
+    return await db.delete(
       'products',
       where: 'id = ?',
       whereArgs: [productId],
@@ -48,9 +48,9 @@ class ProductRepository {
   }
 
   // Atualiza um produto
-  Future<void> updateProduct(Product product) async {
+  Future<int> updateProduct(Product product) async {
     final db = await _databaseHelper.database;
-    await db.update(
+    return await db.update(
       'products',
       product.toJson(),
       where: 'id = ?',
