@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
+import 'package:rede_confeitarias/presentation/components/add_button.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
+import 'package:rede_confeitarias/presentation/pages/product_register.dart';
 
 // Função para construir o mapa com base nas coordenadas passadas
 Widget buildMap(List<Store> stores, Function(LatLng) onMarkerTap) {
@@ -134,22 +136,67 @@ class StoreDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(store.name)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Nome: ${store.name}', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 10),
-            Text('ID: ${store.id}', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text('Latitude: ${store.latitude}', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text('Longitude: ${store.longitude}', style: TextStyle(fontSize: 16)),
-          ],
-        ),
+      appBar: AppBar(
+        title: Text('Redes de confeitarias', 
+          style: TextStyle(
+            fontSize: 14, 
+            fontWeight: FontWeight.bold,
+          ),
+          ),
       ),
+      drawer: CustomDrawer(),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 280,
+                child: Center(
+                  child: Text('Nome da loja', 
+                    style: TextStyle(
+                      color: AppColors.secondary, 
+                      fontSize: 20, 
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  )
+                )
+              ),
+              IconButton(onPressed: (){
+                Navigator.pushNamed(context, '/update-store');
+              }, 
+              icon: Icon(Icons.settings, 
+              color: AppColors.secondary, 
+              size: 20,))
+            ],
+          ),
+          SizedBox(height: 20,),
+            Container(
+              child: Center(
+                child: Text('Tenta acesso a todos produtos cadastrados desta loja. Aperte no botão + para criar novo produto.', 
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.secondary, 
+                    fontSize: 16, 
+                  ),
+                )
+              )
+            ), 
+
+        ],
+      ),
+      floatingActionButton: AddButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ProductRegister(idStore: 1)),
+              );
+            },
+          ),
     );
   }
 }

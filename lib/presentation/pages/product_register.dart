@@ -125,6 +125,8 @@ class _ProductRegisterState extends State<ProductRegister> {
                     return;
                   }
 
+                  print('widget.idStore: ${widget.idStore}');
+
 
                  final Product productData = Product(
                         storeId: widget.idStore!,
