@@ -16,16 +16,22 @@ class Product {
   });
 
   // Converte o objeto Product para um Map
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'storeId': storeId,
-      'productName': productName,
-      'price': price,
-      'description': description,
-      'imageUrl': imageUrl,
-    };
+Map<String, dynamic> toJson() {
+  final map = {
+    'storeId': storeId,
+    'productName': productName,
+    'price': price,
+    'description': description,
+    'imageUrl': imageUrl,
+  };
+
+  if (id != null) {
+    map['id'] = id!;
   }
+
+  return map;
+}
+
 
   // Converte um Map para o objeto Product
   factory Product.fromJson(Map<String, dynamic> json) {

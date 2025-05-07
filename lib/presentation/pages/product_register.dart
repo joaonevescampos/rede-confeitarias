@@ -27,8 +27,9 @@ class _ProductRegisterState extends State<ProductRegister> {
   String responseMessage = '';
   List<Product> productsData = [];
   List<File> selectedImages = [];
-
+  
   void _handleImagesSelected(List<File> images) {
+    print('idStore: $widget.idStore');
     setState(() {
       selectedImages = images;
     });

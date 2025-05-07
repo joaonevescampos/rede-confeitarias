@@ -7,6 +7,7 @@ import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/product_widget.dart';
 import 'package:rede_confeitarias/presentation/pages/product_register.dart';
 import 'package:rede_confeitarias/repositories/product_repository.dart';
+import 'package:rede_confeitarias/repositories/store_repository.dart';
 
 class StoreDetail extends StatefulWidget {
   final int? idStore;
@@ -17,10 +18,15 @@ class StoreDetail extends StatefulWidget {
 }
 
 class _StoreDetailState extends State<StoreDetail> {
-   Store? storeData;
-   final ProductRepository _storeRepository = ProductRepository();
+  String? nameOfStore;
+
+   final ProductRepository _productRepository = ProductRepository();
   String responseMessage = '';
   List<Product> productsData = [];
+
+  final StoreRepository _storeRepository = StoreRepository();
+   String responseMessageStore = '';
+  Store? storeData;
 
   @override
   void initState() {
@@ -37,11 +43,30 @@ class _StoreDetailState extends State<StoreDetail> {
     return;
   }
     // Exemplo: usando seu StoreRepository para pegar a loja
-    final products = await _storeRepository.getProductsByStoreId(widget.idStore!);
+    final products = await _productRepository.getProductsByStoreId(widget.idStore!);
+    print('products: $products');
     
     setState(() {
       productsData = products;
     });
+
+    final id = widget.idStore;
+    final storeDetail = await _storeRepository.getStoreById(id!);
+
+    setState(() {
+      storeData = storeDetail;
+      nameOfStore = storeDetail?.storeName;
+    });
+
+    // print('storeId: $id');
+    // print(storeData?.storeName);
+    // print(storeData?.phone);
+    // print(storeData?.id);
+    // print(storeData?.city);
+    // print(storeData?.latitude);
+    // print(storeData?.longitude);
+    // print(storeData?.cep);
+    // print(storeData?.uf);
   }
 
   @override
@@ -65,7 +90,7 @@ class _StoreDetailState extends State<StoreDetail> {
               Container(
                 width: 280,
                 child: Center(
-                  child: Text('Nome da loja', 
+                  child: Text('$nameOfStore', 
                     style: TextStyle(
                       color: AppColors.secondary, 
                       fontSize: 20, 
@@ -120,7 +145,9 @@ class _StoreDetailState extends State<StoreDetail> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => ProductRegister(idStore: widget.idStore)),
+                MaterialPageRoute(builder: (_) => 
+                ProductRegister(idStore: widget.idStore)
+                ),
               );
             },
           ),

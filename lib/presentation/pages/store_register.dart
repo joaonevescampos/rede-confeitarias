@@ -223,8 +223,6 @@ class _StoreRegisterState extends State<StoreRegister> {
                         });
                       }
 
-                      
-
                       // Função para listar todas as lojas
                         try {
                           final stores = await _storeRepository.getAllStores();
