@@ -8,6 +8,15 @@ class DatabaseHelper {
 
   DatabaseHelper._internal();
 
+//   Future<void> resetDatabase() async {
+//   final databasesPath = await getDatabasesPath();
+//   final path = join(databasesPath, 'rede_confeitarias.db');
+
+//   await deleteDatabase(path);
+//   _database = await _initDatabase();
+// }
+
+
   // Cria ou abre o banco de dados
   Future<Database> get database async {
     if (_database != null) {
@@ -32,7 +41,7 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE stores (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        store_name TEXT,
+        storeName TEXT,
         address TEXT,
         city TEXT,
         uf TEXT,
@@ -47,12 +56,12 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        store_id INTEGER,  -- Relacionamento com a tabela 'stores'
-        name TEXT,
+        storeId INTEGER,  -- Relacionamento com a tabela 'stores'
+        productName TEXT,
         description TEXT,
         price REAL,
-        image_url TEXT,
-        FOREIGN KEY(store_id) REFERENCES stores(id)
+        imageUrl TEXT,
+        FOREIGN KEY(storeId) REFERENCES stores(id)
       )
     ''');
   }

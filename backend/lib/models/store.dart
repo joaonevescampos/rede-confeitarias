@@ -1,5 +1,5 @@
 class Store {
-  final String store_name;
+  final String storeName;
   final String phone;
   final String cep;
   final double latitude;
@@ -9,7 +9,7 @@ class Store {
   final String address;
 
   Store({
-    required this.store_name,
+    required this.storeName,
     required this.phone,
     required this.cep,
     required this.latitude,
@@ -21,7 +21,7 @@ class Store {
 
   Map<String, dynamic> toMap() {
     return {
-      'store_name': store_name,
+      'store_name': storeName,
       'phone': phone,
       'cep': cep,
       'latitude': latitude,

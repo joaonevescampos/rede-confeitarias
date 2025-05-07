@@ -45,25 +45,25 @@ Future<Response> createProductHandler(Request request) async {
     final data = jsonDecode(body);
 
     if (
-      data['product_name'] == null || 
+      data['productName'] == null || 
       data['price'] == null ||
       data['description'] == null || 
-      data['image_url'] == null
+      data['imageUrl'] == null
     ) {
       return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
     }
 
     final product = Product(
-      store_id: data['store_id'],
-      product_name: data['product_name'],
+      storeId: data['storeId'],
+      productName: data['productName'],
       price: data['price'],
       description: data['description'],
-      image_url: data['image_url'],
+      imageUrl: data['imageUrl'],
     );
 
     await DB.connection.query('''
-      INSERT INTO products (store_id, product_name, price, description, image_url)
-      VALUES (@store_id, @product_name, @price, @description, @image_url)
+      INSERT INTO products (storeId, productName, price, description, imageUrl)
+      VALUES (@storeId, @productName, @price, @description, @imageUrl)
     ''', substitutionValues: product.toMap());
 
     return Response.ok(jsonEncode(
@@ -106,27 +106,27 @@ Future<Response> updateProductHandler(Request request, String idParam) async {
     final data = jsonDecode(body);
 
       if (
-      data['product_name'] == null || 
+      data['productName'] == null || 
       data['price'] == null ||
       data['description'] == null || 
-      data['image_url'] == null
+      data['imageUrl'] == null
     ) {
       return Response(400, body: jsonEncode({'erro': 'Campos obrigatórios não preenchidos'}));
     }
 
     await DB.connection.query('''
       UPDATE products SET 
-        product_name = @product_name,
+        productName = @productName,
         price = @price,
         description = @description,
-        image_url = @image_url
+        imageUrl = @imageUrl
       WHERE id = @id
     ''', substitutionValues: {
       'id': id,
-      'product_name': data['product_name'],
+      'productName': data['productName'],
       'price': data['price'],
       'description': data['description'],
-      'image_url': data['image_url'],
+      'imageUrl': data['imageUrl'],
     });
 
     return Response.ok(jsonEncode(

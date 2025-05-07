@@ -29,10 +29,15 @@ class _ProductRegisterState extends State<ProductRegister> {
   List<File> selectedImages = [];
   
   void _handleImagesSelected(List<File> images) {
-    print('idStore: $widget.idStore');
+    // final teste = images[0].path;
+    // final testeId = widget.idStore;
+    // print('idStore: $testeId');
+    // print('imagens-teste: $teste');
+
     setState(() {
       selectedImages = images;
     });
+    // print('selectedImages: ${selectedImages[1]}');
   }
 
   @override
@@ -102,9 +107,7 @@ class _ProductRegisterState extends State<ProductRegister> {
                 ),
                 const SizedBox(height: 20,),
                  MultiImagePickerWidget(onImagesSelected: _handleImagesSelected),
-                  // Text('Total: ${selectedImages.length} imagem(ns) selecionada(s)'),
-                  // if (selectedImage != null)
-                  //   print('Imagem selecionada: ${selectedImage!.path}'),
+                  Text('Total: ${selectedImages.length} imagem(ns) selecionada(s)'),
               ],
             )
           ),
@@ -116,7 +119,7 @@ class _ProductRegisterState extends State<ProductRegister> {
                 final productName = productNameController.text;
                 final price = double.parse(priceController.text);
                 final description = descriptionController.text;
-                final images = selectedImages;
+                final images = alternativeImage;
 
                    if (widget.idStore == null) {
                     setState(() {
@@ -126,15 +129,12 @@ class _ProductRegisterState extends State<ProductRegister> {
                     return;
                   }
 
-                  print('widget.idStore: ${widget.idStore}');
-
-
                  final Product productData = Product(
                         storeId: widget.idStore!,
                         productName: productName,
                         price: price,
                         description: description,
-                        imageUrl: images[0].path,
+                        imageUrl: images,
                       );
 
                  //Função para criar produto
@@ -143,10 +143,12 @@ class _ProductRegisterState extends State<ProductRegister> {
                         setState(() {
                           responseMessage = 'Produto criado com sucesso! ID: $productId';
                         });
+                        print(responseMessage);
                       } catch (error) {
                         setState(() {
                           responseMessage = 'Erro ao criar produto. $error';
                         });
+                          print(responseMessage);
                       }
 
                 // Exemplo de feedback visual

@@ -9,7 +9,7 @@ class ProductRepository {
     final db = await _databaseHelper.database;
     final List<Map<String, dynamic>> maps = await db.query(
       'products',
-      where: 'store_id = ?',
+      where: 'storeId = ?',
       whereArgs: [storeId],  // Filtra pelos produtos da loja com o ID fornecido
     );
     return List.generate(maps.length, (i) {

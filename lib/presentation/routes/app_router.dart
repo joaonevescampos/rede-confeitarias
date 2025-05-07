@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
 import 'package:rede_confeitarias/presentation/pages/home_page.dart';
+import 'package:rede_confeitarias/presentation/pages/product_register.dart';
 import 'package:rede_confeitarias/presentation/pages/store_detail.dart';
 import 'package:rede_confeitarias/presentation/pages/store_register.dart';
 import 'package:rede_confeitarias/presentation/pages/stores_map.dart';
@@ -25,6 +26,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const UpdateProduct());
        case '/teste':
         return MaterialPageRoute(builder: (_) => const CreateStorePage());
+      case '/product_register':
+        return MaterialPageRoute(builder: (_) => const ProductRegister(idStore: 40,));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

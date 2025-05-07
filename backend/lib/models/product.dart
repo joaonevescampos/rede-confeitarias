@@ -1,25 +1,25 @@
 class Product {
-  final int store_id;
-  final String product_name;
+  final int storeId;
+  final String productName;
   final double price;
   final String description;
-  final String image_url;
+  final String imageUrl;
 
   Product({
-    required this.store_id,
-    required this.product_name,
+    required this.storeId,
+    required this.productName,
     required this.price,
     required this.description,
-    required this.image_url,
+    required this.imageUrl,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'store_id': store_id,
-      'product_name': product_name,
+      'storeId': storeId,
+      'productName': productName,
       'price': price,
       'description': description,
-      'image_url': image_url,
+      'imageUrl': imageUrl,
     };
   }
 }
