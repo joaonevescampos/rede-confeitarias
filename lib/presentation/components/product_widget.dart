@@ -79,9 +79,54 @@ class ProductInfo extends StatelessWidget {
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: AppColors.terciary, size: 20,),
+                    icon: Icon(Icons.delete, color: AppColors.terciary, size: 20),
                     onPressed: () {
-                      // ação de deletar
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            titlePadding: EdgeInsets.only(top: 16, left: 16, right: 8),
+                            contentPadding: EdgeInsets.all(16),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Confirmação'),
+                                IconButton(
+                                  icon: Icon(Icons.close),
+                                  onPressed: () => Navigator.of(context).pop(), // fecha o popup
+                                )
+                              ],
+                            ),
+                            content: Text('Você tem certeza que deseja excluir este item?'),
+                            actions: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                onPressed: () {
+                                  // ação de deletar
+                                  Navigator.of(context).pop(); // Fecha o popup após confirmar
+                                },
+                                child: Text('Excluir'),
+                              ),
+                              
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(); // Fecha o popup
+                                },
+                                child: Text('Cancelar'),
+                              ),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      );
                     },
                   ),
                 ],

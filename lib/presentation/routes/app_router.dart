@@ -16,8 +16,8 @@ class AppRouter {
       case '/store-register':
         return MaterialPageRoute(builder: (_) => const StoreRegister());
       case '/store-details':
-        final id = settings.hashCode;
-        return MaterialPageRoute(builder: (_) => StoreDetail(idStore: id)); 
+        // final id = settings.hashCode;
+        return MaterialPageRoute(builder: (_) => StoreDetail(idStore: 40)); 
       case '/stores-map':
         return MaterialPageRoute(builder: (_) => StoresMap());
       case '/update-store':
