@@ -127,11 +127,13 @@ class _StoreDetailState extends State<StoreDetail> {
             ...productsData.map((product) {
               return Column(
                 children: [
-                  ProductInfo(
+                  ProductWidget(
+                    id: product.id!,
                     productName: product.productName,
                     price: product.price,
                     description: product.description,
                     imageUrl: product.imageUrl,
+                    onDeleted: fetchStore,
                   ),
                   const SizedBox(height: 10,)
                 ],
