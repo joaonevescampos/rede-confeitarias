@@ -2,28 +2,59 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
+import 'package:rede_confeitarias/models/product_model.dart';
 import 'package:rede_confeitarias/presentation/components/add_image.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
+import 'package:rede_confeitarias/repositories/product_repository.dart';
 class UpdateProduct extends StatefulWidget {
-  const UpdateProduct({super.key});
+  final int id;
+  const UpdateProduct({
+    required this.id,
+    super.key,
+    });
 
   @override
   State<UpdateProduct> createState() => _UpdateProductState();
 }
 
 class _UpdateProductState extends State<UpdateProduct> {
+  final ProductRepository _productRepository = ProductRepository();
+  String responseMessage = '';
+  final alternativeImage = 'https://media.istockphoto.com/id/1394758946/pt/vetorial/no-image-raster-symbol-missing-available-icon-no-gallery-for-this-moment-placeholder.jpg?s=612x612&w=0&k=20&c=7ay7BmjmllrzxhLs8iGE9CbhNtxaGXiIvyV6nShL9Zg=';
+  Product? productData;
   final _formKey = GlobalKey<FormState>();
-  final productNameController = TextEditingController(text: 'Nome prévio fixo');
-  final priceController = TextEditingController(text: '20');
-  final descriptionController = TextEditingController(text: 'Descrição Prévia');
-    
+  late TextEditingController priceController = TextEditingController();
+  late TextEditingController descriptionController = TextEditingController();
+  late TextEditingController productNameController = TextEditingController();
+
   List<File> selectedImages = [];
 
   void _handleImagesSelected(List<File> images) {
     setState(() {
       selectedImages = images;
     });
+  }
+  @override
+  void initState() {
+    super.initState();
+    fetchProduct();
+  }
+
+  Future<void> fetchProduct() async {
+    final product = await _productRepository.getProductById(widget.id);
+    setState(() {
+      productData = product;
+      productNameController = TextEditingController(text: productData?.productName);
+      priceController = TextEditingController(text: '${productData?.price}');
+      descriptionController = TextEditingController(text: productData?.description);
+    });
+  }
+
+  @override
+  void dispose() {
+    productNameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,7 +74,7 @@ class _UpdateProductState extends State<UpdateProduct> {
         children: [
           Container(
             child: Center(
-              child: Text('Atualizar Produto', 
+              child: Text('Atualizar Produto: ${productData?.productName}', 
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.secondary, 
@@ -56,7 +87,7 @@ class _UpdateProductState extends State<UpdateProduct> {
           SizedBox(height: 20,),
           Container(
             child: Center(
-              child: Text('Preencha o formulário para cadastrar um produto.', 
+              child: Text('Edite o formulário para atualizar o produto.', 
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.secondary, 
@@ -107,19 +138,43 @@ class _UpdateProductState extends State<UpdateProduct> {
                 final productName = productNameController.text;
                 final price = priceController.text;
                 final description = descriptionController.text;
-                final images = selectedImages;
+                final images = alternativeImage;
 
-                // Aqui você pode continuar com o envio, salvar no banco de dados ou o que quiser
-                print('Nome: $productName');
-                print('Telefone: $price');
-                print('CEP: $description');
-                print('Cidade: $images');
+                Product newProduct = Product(
+                  storeId: productData!.storeId,
+                  productName: productName,
+                  price: double.parse(price),
+                  description: description,
+                  imageUrl: images
+                );
+
+                print(productName);
+                print(price);
+                print(description);
+                print(images);
+
+                try {
+                  print('entrei no try');
+                  int productUpdatedId = await _productRepository.updateProduct(newProduct);
+                  print('id do produto atualizado: $productUpdatedId');
+                  Product? productUpdated = await _productRepository.getProductById(productUpdatedId);
+                  print('feito o update:');
+                  print(productUpdated);
+                  setState(() {
+                    responseMessage = 'Produto atualizado com sucesso';
+                  });
 
                 // Exemplo de feedback visual
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Cadastro realizado com sucesso!', 
+                  const SnackBar(content: Text('Atualização feita com sucesso!', 
                   style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                 );
+                  
+                } catch (error) {
+                  setState(() {
+                    responseMessage = 'Erro ao atualizar produto: $error';
+                  });
+                }
 
                 Navigator.pushNamed(context, '/store-details');
                 

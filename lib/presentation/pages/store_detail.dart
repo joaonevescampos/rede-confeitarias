@@ -4,6 +4,7 @@ import 'package:rede_confeitarias/models/product_model.dart';
 import 'package:rede_confeitarias/models/store_model.dart';
 import 'package:rede_confeitarias/presentation/components/add_button.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
+import 'package:rede_confeitarias/presentation/components/loading_widget.dart';
 import 'package:rede_confeitarias/presentation/components/product_widget.dart';
 import 'package:rede_confeitarias/presentation/pages/product_register.dart';
 import 'package:rede_confeitarias/repositories/product_repository.dart';
@@ -18,6 +19,7 @@ class StoreDetail extends StatefulWidget {
 }
 
 class _StoreDetailState extends State<StoreDetail> {
+  bool isLoading = true;
   String? nameOfStore;
 
    final ProductRepository _productRepository = ProductRepository();
@@ -35,19 +37,21 @@ class _StoreDetailState extends State<StoreDetail> {
   }
 
   Future<void> fetchStore() async {
-     if (widget.idStore == null) {
-    setState(() {
-      productsData = [];
-      responseMessage = 'Loja não encontrada.';
-    });
-    return;
-  }
+    if (widget.idStore == null) {
+      setState(() {
+        productsData = [];
+        responseMessage = 'Loja não encontrada.';
+      });
+      return;
+    }
     // Exemplo: usando seu StoreRepository para pegar a loja
     final products = await _productRepository.getProductsByStoreId(widget.idStore!);
-    print('products: $products');
     
     setState(() {
       productsData = products;
+      isLoading = false;
+      print('foi feito o fetch!!!!');
+
     });
 
     final id = widget.idStore;
@@ -71,6 +75,10 @@ class _StoreDetailState extends State<StoreDetail> {
 
   @override
   Widget build(BuildContext context) {
+    if(isLoading) {
+      return LoadingWidget();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Redes de confeitarias', 
@@ -150,7 +158,7 @@ class _StoreDetailState extends State<StoreDetail> {
                 MaterialPageRoute(builder: (_) => 
                 ProductRegister(idStore: widget.idStore)
                 ),
-              );
+              ).then((_) => fetchStore());
             },
           ),
     );
