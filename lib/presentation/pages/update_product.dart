@@ -150,11 +150,6 @@ class _UpdateProductState extends State<UpdateProduct> {
                   imageUrl: images
                 );
 
-                print(productName);
-                print(price);
-                print(description);
-                print(images);
-
                 try {
                   await _productRepository.updateProduct(newProduct);
                  

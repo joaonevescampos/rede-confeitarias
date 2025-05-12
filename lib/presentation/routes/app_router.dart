@@ -21,7 +21,7 @@ class AppRouter {
       case '/stores-map':
         return MaterialPageRoute(builder: (_) => StoresMap());
       case '/update-store':
-        return MaterialPageRoute(builder: (_) => const UpdateStore());
+        return MaterialPageRoute(builder: (_) => const UpdateStore(idStore: 40));
       case '/update-product':
         return MaterialPageRoute(builder: (_) => const UpdateProduct(id: 40));
        case '/teste':

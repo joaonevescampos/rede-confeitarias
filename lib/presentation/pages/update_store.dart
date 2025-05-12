@@ -4,25 +4,75 @@ import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
 import 'package:rede_confeitarias/presentation/components/map.dart';
+import 'package:rede_confeitarias/repositories/store_repository.dart';
 import 'package:rede_confeitarias/services/cep_service.dart';
 
+import '../../models/store_model.dart';
+
 class UpdateStore extends StatefulWidget {
-  const UpdateStore({super.key});
+  final int? idStore;
+
+  const UpdateStore({Key? key, required this.idStore}) : super(key: key);
 
   @override
   State<UpdateStore> createState() => _UpdateStoreState();
 }
 
 class _UpdateStoreState extends State<UpdateStore> {
+  final StoreRepository _storeRepository = StoreRepository();
+  String responseMessage = '';
+  Store? storeData;
+
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final cepController = TextEditingController();
-  final phoneController = TextEditingController();
-  final adressController = TextEditingController();
-  final stateController = TextEditingController();
-  final cityController = TextEditingController();
-  final neighborhoodController = TextEditingController();
+  late TextEditingController nameController = TextEditingController();
+  late TextEditingController cepController = TextEditingController();
+  late TextEditingController phoneController = TextEditingController();
+  late TextEditingController addressController = TextEditingController();
+  late TextEditingController ufController = TextEditingController();
+  late TextEditingController cityController = TextEditingController();
+  late TextEditingController neighborhoodController = TextEditingController();
   LatLng? coordenates;
+
+    @override
+  void initState() {
+    super.initState();
+    fetchStore();
+  }
+
+  Future<void> fetchStore() async {
+    if (widget.idStore == null) {
+      setState(() {
+        responseMessage = 'Loja não encontrada.';
+      });
+      return;
+    }
+    // Exemplo: usando seu StoreRepository para pegar a loja
+    final store = await _storeRepository.getStoreById(widget.idStore!);
+    print('foi feito o fetch - get!!!!');
+    
+    setState(() {
+      storeData = store;
+      nameController = TextEditingController(text: storeData?.storeName);
+      cepController = TextEditingController(text: storeData?.cep);
+      phoneController = TextEditingController(text: storeData?.phone);
+      addressController = TextEditingController(text: storeData?.address);
+      ufController = TextEditingController(text: storeData?.uf);
+      cityController = TextEditingController(text: storeData?.city);
+      neighborhoodController = TextEditingController(text: storeData?.neighborhood);
+      coordenates = LatLng(storeData!.latitude, storeData!.longitude);
+
+      // isLoading = false;
+    });
+
+    print(storeData?.storeName);
+    print(storeData?.phone);
+    print(storeData?.id);
+    print(storeData?.city);
+    print(storeData?.latitude);
+    print(storeData?.longitude);
+    print(storeData?.cep);
+    print(storeData?.uf);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +142,9 @@ class _UpdateStoreState extends State<UpdateStore> {
                           final data = await fetchAddressFromCep(cep);
 
                           if (data != null) {
-                            adressController.text = data['logradouro'] ?? '';
+                            addressController.text = data['logradouro'] ?? '';
                             cityController.text = data['cidade'] ?? '';
-                            stateController.text = data['estado'] ?? '';
+                            ufController.text = data['estado'] ?? '';
                             neighborhoodController.text = data['bairro'] ?? '';
 
                             final coords = await searchCoordenates(
@@ -103,8 +153,6 @@ class _UpdateStoreState extends State<UpdateStore> {
                               estado: data['estado'] ?? '',
                               logradouro: data['logradouro'] ?? '',
                             );
-
-                            print('Coordenadas: $coords');
 
                             if (coords != null) {
                               setState(() {
@@ -151,7 +199,7 @@ class _UpdateStoreState extends State<UpdateStore> {
                         label: 'Estado',
                         maxLength: 2,
                         keyboardType: TextInputType.text,
-                        controller: stateController,
+                        controller: ufController,
                       ),
                     ),
                   ],
@@ -161,7 +209,7 @@ class _UpdateStoreState extends State<UpdateStore> {
                 CustomInput(
                   label: 'Endereço',
                   keyboardType: TextInputType.text,
-                  controller: adressController,
+                  controller: addressController,
                 ),
                 const SizedBox(height: 20),
                 CustomInput(
@@ -189,22 +237,41 @@ class _UpdateStoreState extends State<UpdateStore> {
                       final phone = phoneController.text;
                       final cep = cepController.text;
                       final city = cityController.text;
-                      final state = stateController.text;
-                      final address = adressController.text;
+                      final uf = ufController.text;
+                      final address = addressController.text;
                       final neighborhood = neighborhoodController.text;
 
                       // Aqui você pode continuar com o envio, salvar no banco de dados ou o que quiser
+                      print('Novos dados da loja');
                       print('Nome: $name');
                       print('Telefone: $phone');
                       print('CEP: $cep');
                       print('Cidade: $city');
-                      print('Estado: $state');
+                      print('Estado: $uf');
                       print('Endereço: $address');
                       print('Bairro: $neighborhood');
+                      print(coordenates?.latitude);
+                      print(coordenates?.longitude);
+
+                      Store newStore = Store(
+                        id: widget.idStore,
+                        storeName: name,
+                        phone: phone,
+                        cep: cep,
+                        city: city,
+                        uf: uf,
+                        address: address,
+                        neighborhood: neighborhood,
+                        latitude: coordenates!.latitude,
+                        longitude: coordenates!.longitude,
+                      );
+
+                      final idFetch = await _storeRepository.updateStore(newStore);
+                      print('idFeatch: $idFetch');
 
                       // Exemplo de feedback visual
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Cadastro realizado com sucesso!', 
+                        const SnackBar(content: Text('Loja atualizada com realizado com sucesso!', 
                         style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                       );
 

@@ -7,6 +7,7 @@ import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/loading_widget.dart';
 import 'package:rede_confeitarias/presentation/components/product_widget.dart';
 import 'package:rede_confeitarias/presentation/pages/product_register.dart';
+import 'package:rede_confeitarias/presentation/pages/update_store.dart';
 import 'package:rede_confeitarias/repositories/product_repository.dart';
 import 'package:rede_confeitarias/repositories/store_repository.dart';
 
@@ -111,7 +112,12 @@ class _StoreDetailState extends State<StoreDetail> {
                 )
               ),
               IconButton(onPressed: (){
-                Navigator.pushNamed(context, '/update-store');
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => 
+                UpdateStore(idStore: widget.idStore)
+                ),
+              ).then((_) => fetchStore());
               }, 
               icon: Icon(Icons.settings, 
               color: AppColors.secondary, 
