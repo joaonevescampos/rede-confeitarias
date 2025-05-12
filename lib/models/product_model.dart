@@ -1,6 +1,6 @@
 class Product {
   final int? id;
-  final int storeId;
+  final int? storeId;
   final String productName;
   final double price;
   final String description;
@@ -8,7 +8,7 @@ class Product {
 
   Product({
     this.id,
-    required this.storeId,
+    this.storeId,
     required this.productName,
     required this.price,
     required this.description,

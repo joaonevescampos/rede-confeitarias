@@ -139,8 +139,10 @@ class _UpdateProductState extends State<UpdateProduct> {
                 final price = priceController.text;
                 final description = descriptionController.text;
                 final images = alternativeImage;
+                
 
                 Product newProduct = Product(
+                  id: widget.id,
                   storeId: productData!.storeId,
                   productName: productName,
                   price: double.parse(price),
@@ -154,26 +156,27 @@ class _UpdateProductState extends State<UpdateProduct> {
                 print(images);
 
                 try {
-                  print('entrei no try');
-                  int productUpdatedId = await _productRepository.updateProduct(newProduct);
-                  print('id do produto atualizado: $productUpdatedId');
-                  Product? productUpdated = await _productRepository.getProductById(productUpdatedId);
-                  print('feito o update:');
-                  print(productUpdated);
+                  await _productRepository.updateProduct(newProduct);
+                 
                   setState(() {
                     responseMessage = 'Produto atualizado com sucesso';
                   });
-
-                // Exemplo de feedback visual
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Atualização feita com sucesso!', 
-                  style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
-                );
+                  
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Atualização feita com sucesso!', 
+                    style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
+                  );
                   
                 } catch (error) {
+                  
                   setState(() {
                     responseMessage = 'Erro ao atualizar produto: $error';
                   });
+                 
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Houve um erro interno na atualização do produto. Tente mais tarde!', 
+                    style: TextStyle(color: Colors.white),), backgroundColor: Colors.red),
+                  );
                 }
 
                 Navigator.pushNamed(context, '/store-details');

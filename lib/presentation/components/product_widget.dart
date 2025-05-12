@@ -61,7 +61,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 children: [
                   Container(
                     width: 150,
-                    child: Text('${widget.productName}. O id é: ${widget.id}',
+                    child: Text('${widget.productName}',
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.secondary,
