@@ -22,6 +22,7 @@ class StoreDetail extends StatefulWidget {
 class _StoreDetailState extends State<StoreDetail> {
   bool isLoading = true;
   String? nameOfStore;
+  String message = '';
 
    final ProductRepository _productRepository = ProductRepository();
   String responseMessage = '';
@@ -46,15 +47,23 @@ class _StoreDetailState extends State<StoreDetail> {
       return;
     }
     // Exemplo: usando seu StoreRepository para pegar a loja
-    final products = await _productRepository.getProductsByStoreId(widget.idStore!);
+    try {
+      final products = await _productRepository.getProductsByStoreId(widget.idStore!);
     
-    setState(() {
-      productsData = products;
-      isLoading = false;
-      print('foi feito o fetch!!!!');
+      setState(() {
+        productsData = products;
+        isLoading = false;
+        print('foi feito o fetch!!!!');
+      });
 
-    });
-
+    } catch (error) {
+       setState(() {
+        productsData = [];
+        isLoading = false;
+        print('falha no fetch!!! $error');
+      });
+    }
+    
     final id = widget.idStore;
     final storeDetail = await _storeRepository.getStoreById(id!);
 
@@ -97,9 +106,9 @@ class _StoreDetailState extends State<StoreDetail> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 280,
+                width: 240,
                 child: Center(
-                  child: Text('$nameOfStore', 
+                  child: Text('${storeData?.storeName}', 
                     style: TextStyle(
                       color: AppColors.secondary, 
                       fontSize: 20, 
@@ -119,9 +128,69 @@ class _StoreDetailState extends State<StoreDetail> {
                 ),
               ).then((_) => fetchStore());
               }, 
-              icon: Icon(Icons.settings, 
+              icon: Icon(Icons.edit, 
               color: AppColors.secondary, 
-              size: 20,))
+              size: 20,)),
+              IconButton(
+                icon: Icon(Icons.delete, color: AppColors.terciary, size: 20),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        titlePadding: EdgeInsets.only(top: 16, left: 16, right: 8),
+                        contentPadding: EdgeInsets.all(16),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Confirmação'),
+                            IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () => Navigator.of(context).pop(), // fecha o popup
+                            )
+                          ],
+                        ),
+                        content: Text('Você tem certeza que deseja excluir este item?'),
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                            ),
+                            onPressed: () async {
+                              try {
+                                fetchStore();
+                                await _storeRepository.deleteStore(widget.idStore!);
+                              } catch (error) {
+                                final messageError = 'Erro ao deletar loja: $error';
+                                setState(() {
+                                  message = messageError;
+                                });
+                              }
+                              Navigator.of(context).pop();
+                              // Navigator.pushNamed(context, '/store-details');
+                            },
+                            child: Text('Excluir'),
+                          ),
+                          
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Fecha o popup
+                            },
+                            child: Text('Cancelar'),
+                          ),
+                            ],
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
           SizedBox(height: 20,),

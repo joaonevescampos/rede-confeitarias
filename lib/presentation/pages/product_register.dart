@@ -141,7 +141,7 @@ class _ProductRegisterState extends State<ProductRegister> {
                       try {
                         final productId = await _storeRepository.createProduct(productData);
                         setState(() {
-                          responseMessage = 'Produto criado com sucesso! ID: $productId';
+                          responseMessage = 'Produto criado com sucesso! ID: $productId e a loja tem id: ${widget.idStore}';
                         });
                         print(responseMessage);
                       } catch (error) {

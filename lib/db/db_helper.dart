@@ -8,13 +8,13 @@ class DatabaseHelper {
 
   DatabaseHelper._internal();
 
-//   Future<void> resetDatabase() async {
-//   final databasesPath = await getDatabasesPath();
-//   final path = join(databasesPath, 'rede_confeitarias.db');
+  Future<void> resetDatabase() async {
+  final databasesPath = await getDatabasesPath();
+  final path = join(databasesPath, 'rede_confeitarias.db');
 
-//   await deleteDatabase(path);
-//   _database = await _initDatabase();
-// }
+  await deleteDatabase(path);
+  _database = await _initDatabase();
+}
 
 
   // Cria ou abre o banco de dados
@@ -23,6 +23,7 @@ class DatabaseHelper {
       return _database!;
     } else {
       _database = await _initDatabase();
+      await _database?.execute('PRAGMA foreign_keys = ON');
       return _database!;
     }
   }
@@ -37,6 +38,7 @@ class DatabaseHelper {
 
   // Criação das tabelas no banco de dados
   Future<void> _onCreate(Database db, int version) async {
+    await db.execute('PRAGMA foreign_keys = ON');
     // Criação da tabela 'stores' (exemplo)
     await db.execute('''
       CREATE TABLE stores (
@@ -61,7 +63,7 @@ class DatabaseHelper {
         description TEXT,
         price REAL,
         imageUrl TEXT,
-        FOREIGN KEY(storeId) REFERENCES stores(id)
+        FOREIGN KEY (storeId) REFERENCES stores(id) ON DELETE CASCADE
       )
     ''');
   }

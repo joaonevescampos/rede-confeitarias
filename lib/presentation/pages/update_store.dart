@@ -266,8 +266,8 @@ class _UpdateStoreState extends State<UpdateStore> {
                         longitude: coordenates!.longitude,
                       );
 
-                      final idFetch = await _storeRepository.updateStore(newStore);
-                      print('idFeatch: $idFetch');
+                      await _storeRepository.updateStore(newStore);
+                      
 
                       // Exemplo de feedback visual
                       ScaffoldMessenger.of(context).showSnackBar(
