@@ -8,14 +8,14 @@ class DatabaseHelper {
 
   DatabaseHelper._internal();
 
+    // Reseta o banco de dados 
   Future<void> resetDatabase() async {
-  final databasesPath = await getDatabasesPath();
-  final path = join(databasesPath, 'rede_confeitarias.db');
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, 'rede_confeitarias.db');
 
-  await deleteDatabase(path);
-  _database = await _initDatabase();
-}
-
+    await deleteDatabase(path);
+    _database = await _initDatabase();
+  }
 
   // Cria ou abre o banco de dados
   Future<Database> get database async {

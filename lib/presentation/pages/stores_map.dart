@@ -30,7 +30,7 @@ class _StoresMapState extends State<StoresMap> {
         stores = allStores;
       });
     } catch (error) {
-      print('Erro ao buscar lojas: $error');
+        print('Erro ao buscar lojas: $error');
     }  
   }
 

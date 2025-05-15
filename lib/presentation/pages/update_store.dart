@@ -48,8 +48,6 @@ class _UpdateStoreState extends State<UpdateStore> {
     }
     // Exemplo: usando seu StoreRepository para pegar a loja
     final store = await _storeRepository.getStoreById(widget.idStore!);
-    print('foi feito o fetch - get!!!!');
-    
     setState(() {
       storeData = store;
       nameController = TextEditingController(text: storeData?.storeName);
@@ -63,15 +61,6 @@ class _UpdateStoreState extends State<UpdateStore> {
 
       // isLoading = false;
     });
-
-    print(storeData?.storeName);
-    print(storeData?.phone);
-    print(storeData?.id);
-    print(storeData?.city);
-    print(storeData?.latitude);
-    print(storeData?.longitude);
-    print(storeData?.cep);
-    print(storeData?.uf);
   }
 
   @override
@@ -241,18 +230,6 @@ class _UpdateStoreState extends State<UpdateStore> {
                       final address = addressController.text;
                       final neighborhood = neighborhoodController.text;
 
-                      // Aqui você pode continuar com o envio, salvar no banco de dados ou o que quiser
-                      print('Novos dados da loja');
-                      print('Nome: $name');
-                      print('Telefone: $phone');
-                      print('CEP: $cep');
-                      print('Cidade: $city');
-                      print('Estado: $uf');
-                      print('Endereço: $address');
-                      print('Bairro: $neighborhood');
-                      print(coordenates?.latitude);
-                      print(coordenates?.longitude);
-
                       Store newStore = Store(
                         id: widget.idStore,
                         storeName: name,
@@ -276,14 +253,6 @@ class _UpdateStoreState extends State<UpdateStore> {
                       );
 
                       Navigator.pushNamed(context, '/store-details');
-
-                      // Quando tver um backend
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => StoreDetail(id_store: '1'),
-                      //   ),
-                      // );
                     } else {
                       // Caso algum campo obrigatório esteja vazio
                       ScaffoldMessenger.of(context).showSnackBar(

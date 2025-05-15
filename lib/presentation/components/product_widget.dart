@@ -61,7 +61,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 children: [
                   Container(
                     width: 150,
-                    child: Text('${widget.productName}',
+                    child: Text(widget.productName,
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.secondary,

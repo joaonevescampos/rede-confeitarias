@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
 import 'package:rede_confeitarias/presentation/pages/home_page.dart';
-// import 'package:rede_confeitarias/presentation/pages/product_register.dart';
 import 'package:rede_confeitarias/presentation/pages/store_detail.dart';
 import 'package:rede_confeitarias/presentation/pages/store_register.dart';
 import 'package:rede_confeitarias/presentation/pages/stores_map.dart';
-import 'package:rede_confeitarias/presentation/pages/teste.dart';
-import 'package:rede_confeitarias/presentation/pages/update_product.dart';
-import 'package:rede_confeitarias/presentation/pages/update_store.dart';
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -20,14 +16,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => StoreDetail(idStore: id)); 
       case '/stores-map':
         return MaterialPageRoute(builder: (_) => StoresMap());
-      case '/update-store':
-        return MaterialPageRoute(builder: (_) => const UpdateStore(idStore: 40));
-      case '/update-product':
-        return MaterialPageRoute(builder: (_) => const UpdateProduct(id: 40));
-       case '/teste':
-        return MaterialPageRoute(builder: (_) => const CreateStorePage());
-      // case '/product_register':
-      //   return MaterialPageRoute(builder: (_) => const ProductRegister(idStore: id1));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -46,6 +46,8 @@ class _StoreDetailState extends State<StoreDetail> {
       });
       return;
     }
+
+    print('idStore está vindo e é: ${widget.idStore}');
     // Exemplo: usando seu StoreRepository para pegar a loja
     try {
       final products = await _productRepository.getProductsByStoreId(widget.idStore!);
@@ -53,15 +55,16 @@ class _StoreDetailState extends State<StoreDetail> {
       setState(() {
         productsData = products;
         isLoading = false;
-        print('foi feito o fetch!!!!');
       });
+      print('produto: $productsData');
 
     } catch (error) {
        setState(() {
-        productsData = [];
+        // productsData = [];
         isLoading = false;
-        print('falha no fetch!!! $error');
       });
+      print('Deu erro no produto: $error');
+
     }
     
     final id = widget.idStore;
@@ -71,16 +74,6 @@ class _StoreDetailState extends State<StoreDetail> {
       storeData = storeDetail;
       nameOfStore = storeDetail?.storeName;
     });
-
-    // print('storeId: $id');
-    // print(storeData?.storeName);
-    // print(storeData?.phone);
-    // print(storeData?.id);
-    // print(storeData?.city);
-    // print(storeData?.latitude);
-    // print(storeData?.longitude);
-    // print(storeData?.cep);
-    // print(storeData?.uf);
   }
 
   @override

@@ -24,7 +24,7 @@ Future<Map<String, dynamic>?> fetchAddressFromCep(String cep) async {
       return null;
     }
   } catch (e) {
-    print('Erro ao buscar CEP: $e');
+      print('Erro ao buscar CEP: $e');
     return null;
   }
 }

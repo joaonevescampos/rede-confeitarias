@@ -29,15 +29,9 @@ class _ProductRegisterState extends State<ProductRegister> {
   List<File> selectedImages = [];
   
   void _handleImagesSelected(List<File> images) {
-    // final teste = images[0].path;
-    // final testeId = widget.idStore;
-    // print('idStore: $testeId');
-    // print('imagens-teste: $teste');
-
     setState(() {
       selectedImages = images;
     });
-    // print('selectedImages: ${selectedImages[1]}');
   }
 
   @override
@@ -146,9 +140,9 @@ class _ProductRegisterState extends State<ProductRegister> {
                         print(responseMessage);
                       } catch (error) {
                         setState(() {
-                          responseMessage = 'Erro ao criar produto. $error';
+                          responseMessage = 'AQUI - Erro ao criar produto. $error';
                         });
-                          print(responseMessage);
+                        print(responseMessage);
                       }
 
                 // Exemplo de feedback visual

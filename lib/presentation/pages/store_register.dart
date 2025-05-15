@@ -212,15 +212,16 @@ class _StoreRegisterState extends State<StoreRegister> {
                       //Função para criar loja
                       try {
                         final storeId = await _storeRepository.createStore(storeData);
-                        print('storeId: $storeId');
                         setState(() {
                           varStoreId = storeId;
                           responseMessage = 'Loja criada com sucesso! ID: $storeId';
                         });
+                        print(responseMessage);
                       } catch (error) {
                         setState(() {
                           responseMessage = 'Erro ao criar loja: $error';
                         });
+                        print(responseMessage);
                       }
 
                       // Função para listar todas as lojas
@@ -230,10 +231,14 @@ class _StoreRegisterState extends State<StoreRegister> {
                             storesData = stores;
                             responseMessage = 'Lojas listadas com sucesso!';
                           });
+                          print(responseMessage);
+
                         } catch (error) {
                           setState(() {
                             responseMessage = 'Erro ao listar lojas: $error';
                           });
+                          print(responseMessage);
+
                         }
 
                       // Exemplo de feedback visual
@@ -242,7 +247,6 @@ class _StoreRegisterState extends State<StoreRegister> {
                         style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                       );
 
-                      print('varStoreId: $varStoreId');
                       Navigator.push(
                         context,
                         MaterialPageRoute(
