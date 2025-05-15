@@ -6,6 +6,7 @@ import 'package:rede_confeitarias/models/product_model.dart';
 import 'package:rede_confeitarias/presentation/components/add_image.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
+import 'package:rede_confeitarias/presentation/pages/store_detail.dart';
 import 'package:rede_confeitarias/repositories/product_repository.dart';
 class UpdateProduct extends StatefulWidget {
   final int id;
@@ -156,6 +157,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                   setState(() {
                     responseMessage = 'Produto atualizado com sucesso';
                   });
+                  print(responseMessage);
                   
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Atualização feita com sucesso!', 
@@ -167,6 +169,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                   setState(() {
                     responseMessage = 'Erro ao atualizar produto: $error';
                   });
+                  print(responseMessage);
                  
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Houve um erro interno na atualização do produto. Tente mais tarde!', 
@@ -174,7 +177,14 @@ class _UpdateProductState extends State<UpdateProduct> {
                   );
                 }
 
-                Navigator.pushNamed(context, '/store-details');
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StoreDetail(idStore: productData?.storeId),
+                        ),
+                      );
+
+                // Navigator.pushNamed(context, '/store-details');
                 
               } else {
                 // Caso algum campo obrigatório esteja vazio
