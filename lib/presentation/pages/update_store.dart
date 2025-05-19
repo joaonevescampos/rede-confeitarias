@@ -4,6 +4,7 @@ import 'package:rede_confeitarias/core/theme/constants/app_colors.dart';
 import 'package:rede_confeitarias/presentation/components/custom_drawer.dart';
 import 'package:rede_confeitarias/presentation/components/custom_input.dart';
 import 'package:rede_confeitarias/presentation/components/map.dart';
+import 'package:rede_confeitarias/presentation/pages/store_detail.dart';
 import 'package:rede_confeitarias/repositories/store_repository.dart';
 import 'package:rede_confeitarias/services/cep_service.dart';
 
@@ -243,8 +244,12 @@ class _UpdateStoreState extends State<UpdateStore> {
                         longitude: coordenates!.longitude,
                       );
 
-                      await _storeRepository.updateStore(newStore);
-                      
+                      try {
+                        await _storeRepository.updateStore(newStore);
+                        print('feito update da loja com sucesso!');
+                      } catch (error) {
+                        print('Error interno ao fazer o update da loja: $error');
+                      }
 
                       // Exemplo de feedback visual
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -252,7 +257,8 @@ class _UpdateStoreState extends State<UpdateStore> {
                         style: TextStyle(color: Colors.white),), backgroundColor: Colors.green),
                       );
 
-                      Navigator.pushNamed(context, '/store-details');
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => StoreDetail(idStore: widget.idStore)));
+                    
                     } else {
                       // Caso algum campo obrigatório esteja vazio
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -183,8 +183,6 @@ class _UpdateProductState extends State<UpdateProduct> {
                           builder: (context) => StoreDetail(idStore: productData?.storeId),
                         ),
                       );
-
-                // Navigator.pushNamed(context, '/store-details');
                 
               } else {
                 // Caso algum campo obrigatório esteja vazio

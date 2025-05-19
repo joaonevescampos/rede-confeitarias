@@ -165,7 +165,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                 });
                               }
                               Navigator.of(context).pop();
-                              // Navigator.pushNamed(context, '/store-details');
+                              Navigator.pushNamed(context, '/stores-map');
                             },
                             child: Text('Excluir'),
                           ),
